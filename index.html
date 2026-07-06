@@ -104,23 +104,22 @@
     min-height: 0;
   }
   .tile-waiting-row {
-    flex: 1;
+    flex: 0 0 24%;
     display: grid;
     min-height: 0;
   }
   .tile-waiting-row .tile {
     height: 100%;
   }
-  .tile-waiting-row .value { font-size: 64px; }
-  .tile-waiting-row .label { font-size: 20px; }
+  .tile-waiting-row .value { font-size: 56px; }
+  .tile-waiting-row .label { font-size: 18px; }
   .tiles-squares {
+    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
     gap: 8px;
-  }
-  .tiles-squares .tile {
-    aspect-ratio: 1 / 1;
-    height: auto;
+    min-height: 0;
   }
   .tile {
     border-radius: 14px;
