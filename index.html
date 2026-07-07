@@ -106,21 +106,11 @@
     gap: 6px;
     min-height: 0;
   }
-  .tile-waiting-row {
-    flex: 0 0 24%;
-    display: grid;
-    min-height: 0;
-  }
-  .tile-waiting-row .tile {
-    height: 100%;
-  }
-  .tile-waiting-row .value { font-size: 56px; }
-  .tile-waiting-row .label { font-size: 18px; }
   .tiles-squares {
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     gap: 8px;
     min-height: 0;
   }
@@ -135,13 +125,13 @@
     height: 100%;
   }
   .tile .label {
-    font-size: 15px;
+    font-size: 14px;
     margin: 0 0 5px;
     font-weight: 600;
     line-height: 1.15;
   }
   .tile .value {
-    font-size: 34px;
+    font-size: 30px;
     font-weight: 800;
     margin: 0;
     line-height: 1.1;
@@ -205,14 +195,11 @@
   </div>
 
   <div class="tile-groups">
-  <div class="tile-waiting-row">
+  <div class="tiles-squares">
     <div class="tile tile-waiting">
       <p class="label">Calls waiting</p>
       <p class="value" id="val-waiting">–</p>
     </div>
-  </div>
-
-  <div class="tiles-squares">
     <div class="tile tile-offered">
       <p class="label">Offered</p>
       <p class="value" id="val-offered">–</p>
@@ -220,6 +207,10 @@
     <div class="tile tile-answered">
       <p class="label">Answered</p>
       <p class="value" id="val-answered">–</p>
+    </div>
+    <div class="tile tile-callback">
+      <p class="label">Callback requests</p>
+      <p class="value" id="val-callback">–</p>
     </div>
     <div class="tile tile-abandoned">
       <p class="label">Abandoned</p>
@@ -237,12 +228,8 @@
       <p class="label">Avg answer time</p>
       <p class="value" id="val-asa">–</p>
     </div>
-    <div class="tile tile-callback">
-      <p class="label">Callback requests</p>
-      <p class="value" id="val-callback">–</p>
-    </div>
   </div>
-  <p style="font-size:10px; color:#333; text-align:center; margin:4px 0 0; line-height:1.3;">Callback requests = Offered − (Answered + Abandoned). These are FR/SP voicemails and callback-feature requests, handled same day, not missed calls.</p>
+  <p style="font-size:10px; color:#333; text-align:center; margin:4px 0 0; line-height:1.3;">These are FR/SP voicemails and callback-feature requests, handled same day, not missed calls.</p>
   </div>
 
   <div class="controls-row">
