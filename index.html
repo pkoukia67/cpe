@@ -158,6 +158,7 @@
   .tile-longwait { background: #6d28d9; color: #fff; }
   .tile-abandontime { background: #9d174d; color: #fff; }
   .tile-asa { background: #1d4ed8; color: #fff; }
+  .tile-callback { background: #0f766e; color: #fff; }
   .controls-row {
     display: flex;
     align-items: center;
@@ -236,7 +237,12 @@
       <p class="label">Avg answer time</p>
       <p class="value" id="val-asa">–</p>
     </div>
+    <div class="tile tile-callback">
+      <p class="label">Callback requests</p>
+      <p class="value" id="val-callback">–</p>
+    </div>
   </div>
+  <p style="font-size:10px; color:#333; text-align:center; margin:4px 0 0; line-height:1.3;">Callback requests = Offered − (Answered + Abandoned). These are FR/SP voicemails and callback-feature requests, handled same day, not missed calls.</p>
   </div>
 
   <div class="controls-row">
@@ -356,6 +362,8 @@
         document.getElementById('val-longwait').textContent = formatTime(data.longestWait);
         document.getElementById('val-abandontime').textContent = formatTime(data.avgAbandonTime);
         document.getElementById('val-asa').textContent = formatTime(data.asa);
+        var callbackCount = Number(data.offered) - (Number(data.answered) + Number(data.abandoned));
+        document.getElementById('val-callback').textContent = isNaN(callbackCount) ? '–' : Math.max(0, Math.round(callbackCount)).toLocaleString();
         setStatus('ok', 'Connected');
         lastUpdated.textContent = 'Updated ' + new Date().toLocaleTimeString();
       })
