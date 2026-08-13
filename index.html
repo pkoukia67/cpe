@@ -2329,7 +2329,7 @@
       return;
     }
     el.innerHTML = list.slice(0, 30).map((s, i) => `
-      <div onclick="focusMarker(${s.lat},${s.lng},'${s.id}')"
+      <div data-lat="${s.lat}" data-lng="${s.lng}" data-id="${s.id}"
         style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:11px 13px;cursor:pointer;transition:all .15s;"
         onmouseover="this.style.borderColor='rgba(255,209,0,0.3)';this.style.background='rgba(255,209,0,0.04)'"
         onmouseout="this.style.borderColor='var(--border)';this.style.background='rgba(255,255,255,0.03)'">
@@ -2338,6 +2338,7 @@
             <div style="font-size:12px;font-weight:700;color:var(--white);margin-bottom:2px;line-height:1.3;">${s.name}</div>
             <div style="font-size:11px;color:var(--gray-500);">${s.city || ''}${s.city && s.province_state ? ', ' : ''}${s.province_state || ''}</div>
             ${s.phone ? `<div style="font-size:11px;color:var(--gray-400);margin-top:3px;">📞 ${s.phone}</div>` : ''}
+            ${s.email ? `<div style="font-size:11px;color:#4a9eff;margin-top:2px;">✉️ ${s.email}</div>` : ''}
           </div>
           <div style="text-align:right;flex-shrink:0;">
             ${s.dist != null ? `<div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--yellow);">${s.dist.toFixed(1)}</div><div style="font-size:9px;color:var(--gray-600);">miles</div>` : `<div style="font-size:10px;color:var(--gray-600);">#${i+1}</div>`}
@@ -2345,13 +2346,28 @@
         </div>
         ${s.hsb_dealer ? `<div style="margin-top:5px;background:rgba(255,209,0,0.08);border:1px solid rgba(255,209,0,0.2);color:var(--yellow);font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;display:inline-block;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;">HSB DEALER</div>` : ''}
       </div>`).join('');
+
+    // Attach click listeners via data attributes (avoids UUID quoting issues)
+    el.querySelectorAll('[data-id]').forEach(card => {
+      card.addEventListener('click', () => {
+        const lat = parseFloat(card.dataset.lat);
+        const lng = parseFloat(card.dataset.lng);
+        const id = card.dataset.id;
+        focusMarker(lat, lng, id);
+      });
+    });
   }
 
   function focusMarker(lat, lng, id) {
     if (!scMap || !lat || !lng) return;
-    scMap.setView([lat, lng], 14);
-    const found = scMarkers.find(m => m.sc.id === id);
-    if (found) found.marker.openPopup();
+    scMap.setView([parseFloat(lat), parseFloat(lng)], 14, { animate: true });
+    // Find and open the popup for this marker
+    setTimeout(() => {
+      const found = scMarkers.find(m => m.sc.id === id);
+      if (found) {
+        found.marker.openPopup();
+      }
+    }, 400);
   }
 
   function filterDirectory() {
@@ -2367,7 +2383,8 @@
     const show = list.slice(0, 200);
     el.innerHTML = show.map(s => `
       <div class="art-row" style="grid-template-columns:2fr 1fr 1fr 1fr 90px;">
-        <div class="art-name" style="cursor:${s.lat ? 'pointer' : 'default'}" onclick="${s.lat ? `focusMarker(${s.lat},${s.lng},'${s.id}')` : ''}" title="${s.lat ? 'Click to show on map' : 'No map coordinates'}">
+        <div class="art-name" data-lat="${s.lat||''}" data-lng="${s.lng||''}" data-id="${s.id}"
+          style="cursor:${s.lat ? 'pointer' : 'default'}" title="${s.lat ? 'Click to show on map' : 'No map coordinates'}">
           ${s.lat ? '📍' : '📋'} ${s.name}
         </div>
         <div class="art-cat">${s.city || '—'}</div>
@@ -2378,6 +2395,17 @@
           <button onclick="deleteSC('${s.id}','${s.name.replace(/'/g,"&#39;")}')" style="background:rgba(217,53,53,0.1);border:1px solid rgba(217,53,53,0.2);color:var(--red);padding:3px 8px;border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;">Del</button>` : ''}
         </div>
       </div>`).join('');
+
+    // Attach map click on name cells
+    el.querySelectorAll('.art-name[data-lat]').forEach(cell => {
+      if (cell.dataset.lat) {
+        cell.addEventListener('click', () => {
+          focusMarker(parseFloat(cell.dataset.lat), parseFloat(cell.dataset.lng), cell.dataset.id);
+          // Scroll to map
+          document.getElementById('sc-map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      }
+    });
     if (list.length > 200) {
       el.innerHTML += `<div style="padding:10px 16px;font-size:11px;color:var(--gray-600);text-align:center;">Showing 200 of ${list.length} — use the search to narrow results</div>`;
     }
