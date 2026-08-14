@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CPE Customer Service — Internal Wiki</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   :root {
     --yellow: #FFD100;
@@ -1489,84 +1487,46 @@
     <div class="page" id="page-servicecenters">
       <div class="ph">
         <h1>Service <em>Centers</em></h1>
-        <p>Search by customer ZIP or postal code to find the nearest authorized CPE service center</p>
+        <p>Enter the customer's ZIP or postal code to find the nearest authorized CPE service center</p>
       </div>
 
-      <!-- Stats -->
-      <div class="stats">
-        <div class="stat"><div class="stat-n" id="sc-total">—</div><div class="stat-l">Total Centers</div></div>
-        <div class="stat"><div class="stat-n" id="sc-us">—</div><div class="stat-l">United States</div></div>
-        <div class="stat"><div class="stat-n" id="sc-ca">—</div><div class="stat-l">Canada</div></div>
-        <div class="stat"><div class="stat-n" id="sc-map-count">—</div><div class="stat-l">On Map</div></div>
-      </div>
-
-      <!-- Notice -->
-      <div class="notice">
+      <!-- Warning -->
+      <div class="notice" style="margin-bottom:16px;">
         <span style="flex-shrink:0;">⚠️</span>
         <span>You <strong>must call the service center first</strong> before giving the referral to the customer. Confirm they are accepting new customers and can service the unit type.</span>
       </div>
 
-      <!-- Proximity search -->
-      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:20px;">
+      <!-- Search bar -->
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 22px;margin-bottom:16px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-500);margin-bottom:12px;">Find Nearest Service Center</div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-          <div style="position:relative;flex:1;min-width:200px;max-width:300px;">
-            <input id="sc-zip" type="text" placeholder="Enter ZIP or Postal Code..."
-              onkeydown="if(event.key==='Enter')searchByZip()"
-              style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:var(--white);padding:11px 14px;font-family:'Barlow',sans-serif;font-size:14px;border-radius:8px;outline:none;transition:all .2s;"
-              onfocus="this.style.borderColor='rgba(255,209,0,0.5)';this.style.boxShadow='0 0 0 3px rgba(255,209,0,0.08)'"
-              onblur="this.style.borderColor='rgba(255,255,255,0.15)';this.style.boxShadow='none'">
-          </div>
-          <select id="sc-radius" style="background:#1e1e1e;border:1px solid rgba(255,255,255,0.15);color:var(--white);padding:11px 14px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
-            <option value="50">Within 50 mi</option>
-            <option value="100" selected>Within 100 mi</option>
-            <option value="200">Within 200 mi</option>
-            <option value="999">Any distance</option>
-          </select>
-          <button onclick="searchByZip()" style="background:var(--yellow);color:var(--black);border:none;padding:11px 24px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap;"
-            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 16px rgba(255,209,0,0.3)'"
+          <input id="sc-zip" type="text" placeholder="Enter customer ZIP or Postal Code..."
+            onkeydown="if(event.key==='Enter')searchSC()"
+            style="flex:1;min-width:200px;max-width:320px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);color:var(--white);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:14px;border-radius:8px;outline:none;transition:all .2s;"
+            onfocus="this.style.borderColor='rgba(255,209,0,0.5)';this.style.boxShadow='0 0 0 3px rgba(255,209,0,0.08)'"
+            onblur="this.style.borderColor='rgba(255,255,255,0.18)';this.style.boxShadow='none'">
+          <button onclick="searchSC()"
+            style="background:var(--yellow);color:var(--black);border:none;padding:11px 26px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap;"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 16px rgba(255,209,0,0.35)'"
             onmouseout="this.style.transform='none';this.style.boxShadow='none'">🔍 Search</button>
-          <button onclick="clearSearch()" style="background:rgba(255,255,255,0.05);color:var(--gray-300);border:1px solid var(--border);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:8px;cursor:pointer;">Clear</button>
-          <button id="sc-add-btn" class="mgr-only" onclick="openSCModal()" style="display:none;background:rgba(255,209,0,0.1);color:var(--yellow);border:1px solid rgba(255,209,0,0.25);padding:11px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;">+ Add</button>
+          <button onclick="resetSC()"
+            style="background:rgba(255,255,255,0.05);color:var(--gray-300);border:1px solid var(--border);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:8px;cursor:pointer;">Reset</button>
+          <a href="https://www.google.com/maps/d/viewer?mid=1UKhL_cwua2BbfnMxwRk_GRb6hsY" target="_blank"
+            style="background:rgba(255,255,255,0.05);color:var(--gray-300);border:1px solid var(--border);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">↗ Full Screen</a>
         </div>
-        <div id="sc-search-status" style="font-size:12px;color:var(--gray-500);margin-top:10px;display:none;"></div>
+        <div id="sc-status" style="font-size:12px;color:var(--gray-400);margin-top:10px;display:none;"></div>
       </div>
 
-      <!-- Map + Results side by side -->
-      <div style="display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:20px;">
-
-        <!-- Map -->
-        <div style="position:relative;">
-          <div id="sc-map" style="height:480px;border-radius:var(--radius-md);border:1px solid var(--border);overflow:hidden;background:#1a1a1a;"></div>
-          <div id="sc-map-loading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,10,10,0.7);border-radius:var(--radius-md);font-size:13px;color:var(--gray-400);">Loading map...</div>
-        </div>
-
-        <!-- Results list -->
-        <div style="display:flex;flex-direction:column;gap:0;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-600);margin-bottom:8px;" id="sc-results-label">All Centers with Map Pins</div>
-          <div id="sc-results" style="flex:1;overflow-y:auto;max-height:460px;display:flex;flex-direction:column;gap:8px;padding-right:4px;">
-            <div style="text-align:center;color:var(--gray-600);font-size:13px;padding:20px;">Enter a ZIP or postal code to find nearby centers</div>
-          </div>
-        </div>
+      <!-- Google My Maps embed -->
+      <div style="border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border);position:relative;">
+        <iframe id="sc-map-frame"
+          src="https://www.google.com/maps/d/embed?mid=1UKhL_cwua2BbfnMxwRk_GRb6hsY&ehbc=2E312F"
+          width="100%" height="560" style="border:0;display:block;" allowfullscreen loading="lazy">
+        </iframe>
       </div>
 
-      <!-- Full directory -->
-      <div style="margin-top:8px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-500);">Full Directory</div>
-          <div style="position:relative;">
-            <input id="sc-dir-search" type="text" placeholder="Search name, city, state..."
-              oninput="filterDirectory()"
-              style="background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--white);padding:7px 12px 7px 30px;font-family:'Barlow',sans-serif;font-size:12px;border-radius:999px;outline:none;width:240px;">
-            <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--gray-600);font-size:12px;">🔍</span>
-          </div>
-        </div>
-        <div class="art-tbl" id="sc-table">
-          <div class="art-tbl-hd" style="grid-template-columns:2fr 1fr 1fr 1fr 90px;">
-            <div>Name</div><div>City</div><div>State / Prov</div><div>Phone</div><div></div>
-          </div>
-          <div id="sc-rows"><div style="padding:20px;text-align:center;color:var(--gray-600);font-size:13px;">Loading...</div></div>
-        </div>
+      <div style="font-size:11px;color:var(--gray-600);margin-top:8px;text-align:center;">
+        Click any pin on the map to see the service center's name, phone, and address · Zoom and pan freely · Use full screen for best experience
       </div>
     </div>
 
@@ -2156,308 +2116,63 @@
     if (!res.ok) throw new Error(await res.text());
   }
 
-  /* ═══════════════════════════════════════════
-     SERVICE CENTERS
-  ═══════════════════════════════════════════ */
+  // ── SERVICE CENTERS ──────────────────────────────
   let allSC = [];
-  let scMap = null;
-  let scMarkers = [];
-  let scCustomerMarker = null;
-  let dirPage = 0;
-  const DIR_PAGE_SIZE = 50;
 
   async function loadServiceCenters() {
     try {
       allSC = await sbFetch('service_centers', 'active=eq.true&order=name.asc&limit=2000');
-      const us = allSC.filter(s => s.country === 'US').length;
-      const ca = allSC.filter(s => s.country === 'CA').length;
-      const withCoords = allSC.filter(s => s.lat && s.lng).length;
-      document.getElementById('sc-total').textContent = allSC.length.toLocaleString();
-      document.getElementById('sc-us').textContent = us.toLocaleString();
-      document.getElementById('sc-ca').textContent = ca.toLocaleString();
-      document.getElementById('sc-map-count').textContent = withCoords;
-      renderDirectory(allSC);
-      initMap();
-    } catch(e) {
-      document.getElementById('sc-rows').innerHTML = `<div style="padding:20px;text-align:center;color:var(--red);font-size:13px;">Failed to load — check connection</div>`;
-    }
+    } catch(e) { console.error('SC load failed', e); }
   }
 
-  function initMap() {
-    if (scMap) return;
-    const mapEl = document.getElementById('sc-map');
-    if (!mapEl) return;
-    document.getElementById('sc-map-loading').style.display = 'none';
+  async function searchSC() {
+    const zip = document.getElementById('sc-zip').value.trim();
+    if (!zip) { alert('Enter a ZIP or postal code first.'); return; }
 
-    scMap = L.map('sc-map', { zoomControl: true }).setView([39.5, -98.35], 4);
+    const status = document.getElementById('sc-status');
+    status.style.display = 'block';
+    status.textContent = '⏳ Looking up location...';
 
-    // Light readable tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 19
-    }).addTo(scMap);
-
-    // Yellow pin icon
-    const yellowIcon = L.divIcon({
-      className: '',
-      html: `<div style="width:12px;height:12px;background:#FFD100;border:2px solid #000;border-radius:50%;box-shadow:0 0 6px rgba(255,209,0,0.6);"></div>`,
-      iconSize: [12, 12], iconAnchor: [6, 6], popupAnchor: [0, -8]
-    });
-
-    // Plot all centers with coords
-    const withCoords = allSC.filter(s => s.lat && s.lng);
-    withCoords.forEach(s => {
-      const marker = L.marker([s.lat, s.lng], { icon: yellowIcon })
-        .addTo(scMap)
-        .bindPopup(buildPopup(s), { maxWidth: 260 });
-      scMarkers.push({ marker, sc: s });
-      markerById[s.id] = marker;  // fast lookup by ID
-    });
-
-    // Show all pins results list
-    renderResultsList(withCoords.slice(0, 20), null);
-  }
-
-  function buildPopup(s, dist) {
-    const distStr = dist != null ? `<div style="background:#FFD100;color:#000;font-weight:700;font-size:12px;padding:3px 8px;border-radius:3px;display:inline-block;margin-bottom:8px;">📍 ${dist.toFixed(1)} miles away</div>` : '';
-    const addr = [s.address, s.city, s.province_state, s.postal_code].filter(Boolean).join(', ');
-    return `<div style="font-family:Arial,sans-serif;min-width:220px;max-width:260px;line-height:1.5;">
-      ${distStr}
-      <div style="font-weight:700;font-size:14px;margin-bottom:6px;color:#111;">${s.name}</div>
-      ${addr ? `<div style="font-size:12px;color:#444;margin-bottom:4px;">📍 ${addr}</div>` : ''}
-      ${s.phone ? `<div style="font-size:12px;color:#111;margin-bottom:2px;font-weight:600;">📞 ${s.phone}</div>` : '<div style="font-size:11px;color:#999;">No phone on file</div>'}
-      ${s.email ? `<div style="font-size:12px;color:#1a6faf;margin-bottom:2px;">✉️ ${s.email}</div>` : ''}
-      ${s.hsb_dealer ? `<div style="margin-top:6px;background:#fff8dc;border:1px solid #FFD100;color:#7a5c00;font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;display:inline-block;">⭐ HSB DEALER</div>` : ''}
-    </div>`;
-  }
-
-  function haversine(lat1, lon1, lat2, lon2) {
-    const R = 3958.8; // miles
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  }
-
-  async function geocodePostal(zip, isCanada) {
-    // Try Nominatim first
     try {
-      const country = isCanada ? 'Canada' : 'USA';
+      const isCA = /^[A-Za-z]\d[A-Za-z]/.test(zip);
+      const country = isCA ? 'Canada' : 'USA';
       const res = await fetch(
         `https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(zip)}&country=${country}&format=json&limit=1`,
-        { headers: {'User-Agent': 'CPE-Wiki/1.0'} }
+        { headers: { 'User-Agent': 'CPE-Wiki/1.0' } }
       );
       const data = await res.json();
-      if (data.length) return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon), label: data[0].display_name.split(',').slice(0,3).join(',') };
-    } catch(e) {}
-    // Fallback: zippopotam.us
-    try {
-      const country2 = isCanada ? 'ca' : 'us';
-      const res2 = await fetch(`https://api.zippopotam.us/${country2}/${zip}`);
-      if (res2.ok) {
-        const d = await res2.json();
-        if (d.places && d.places.length) {
-          return { lat: parseFloat(d.places[0].latitude), lng: parseFloat(d.places[0].longitude), label: `${d.places[0]['place name']}, ${d.places[0]['state abbreviation']}` };
-        }
+      if (!data.length) {
+        status.textContent = '❌ Location not found. Try without spaces (e.g. L7L0G8 or 90210).';
+        return;
       }
-    } catch(e) {}
-    return null;
-  }
+      const lat = parseFloat(data[0].lat);
+      const lng = parseFloat(data[0].lon);
+      const label = data[0].display_name.split(',').slice(0, 2).join(',').trim();
 
-  // Cache of geocoded postal codes for SC records (so we only geocode once per session)
-  const postalCache = {};
+      // Zoom the embedded Google My Maps to this location
+      const frame = document.getElementById('sc-map-frame');
+      frame.src = `https://www.google.com/maps/d/embed?mid=1UKhL_cwua2BbfnMxwRk_GRb6hsY&ehbc=2E312F&ll=${lat},${lng}&z=11`;
 
-  async function getCoords(sc) {
-    if (sc.lat && sc.lng) return { lat: parseFloat(sc.lat), lng: parseFloat(sc.lng) };
-    const postal = (sc.postal_code || '').trim().replace(/\s+/g, '');
-    if (!postal) return null;
-    if (postalCache[postal]) return postalCache[postal];
-    const isCanada = sc.country === 'CA';
-    // For Canadian, use FSA (first 3 chars) for faster lookup
-    const lookupPostal = isCanada ? postal.slice(0, 3) : postal;
-    const result = await geocodePostal(lookupPostal, isCanada);
-    if (result) postalCache[postal] = result;
-    return result;
-  }
-
-  async function searchByZip() {
-    const rawZip = document.getElementById('sc-zip').value.trim().toUpperCase().replace(/\s+/g, '');
-    const radius = parseInt(document.getElementById('sc-radius').value);
-    if (!rawZip) { alert('Enter a ZIP or postal code first.'); return; }
-
-    const status = document.getElementById('sc-search-status');
-    status.style.display = 'block';
-    status.innerHTML = '⏳ Looking up customer location...';
-
-    // Geocode the customer's ZIP/postal
-    const isCanada = /^[A-Z]\d[A-Z]/.test(rawZip) || (rawZip.length === 6 && /^[A-Z]/.test(rawZip));
-    const customerResult = await geocodePostal(rawZip, isCanada);
-
-    if (!customerResult) {
-      status.textContent = '❌ ZIP/postal code not found. Try without spaces (e.g. L7L5H7 or 90210).';
-      return;
-    }
-
-    const cLat = customerResult.lat;
-    const cLng = customerResult.lng;
-
-    // Customer marker (red)
-    if (scCustomerMarker) scMap.removeLayer(scCustomerMarker);
-    const customerIcon = L.divIcon({
-      className: '',
-      html: `<div style="width:16px;height:16px;background:#ef4444;border:3px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(239,68,68,0.8);"></div>`,
-      iconSize: [16, 16], iconAnchor: [8, 8]
-    });
-    scCustomerMarker = L.marker([cLat, cLng], { icon: customerIcon })
-      .addTo(scMap)
-      .bindPopup(`<strong>📍 Customer: ${rawZip}</strong><br>${customerResult.label}`)
-      .openPopup();
-
-    scMap.setView([cLat, cLng], 9);
-    status.innerHTML = `⏳ Searching ${allSC.length.toLocaleString()} service centers...`;
-
-    // First pass: centers WITH coords -- instant
-    const withCoords = allSC.filter(s => s.lat && s.lng).map(s => ({
-      ...s,
-      dist: haversine(cLat, cLng, parseFloat(s.lat), parseFloat(s.lng))
-    })).filter(s => s.dist <= radius).sort((a, b) => a.dist - b.dist);
-
-    // Show immediate results while we geocode the rest
-    renderResultsList(withCoords, [cLat, cLng]);
-    document.getElementById('sc-results-label').textContent = `${withCoords.length} Results Near ${rawZip} (checking more...)`;
-
-    if (withCoords.length) {
-      const bounds = L.latLngBounds([[cLat, cLng], ...withCoords.slice(0,15).map(s => [s.lat, s.lng])]);
-      scMap.fitBounds(bounds, { padding: [50, 50] });
-    }
-
-    // Update existing marker popups with distance
-    scMarkers.forEach(({marker, sc}) => {
-      const d = haversine(cLat, cLng, parseFloat(sc.lat), parseFloat(sc.lng));
-      marker.setPopupContent(buildPopup(sc, d));
-    });
-
-    // Second pass: geocode centers WITHOUT coords near this area
-    // Only try centers in same country and whose postal starts with same region
-    const rawPrefix = isCanada ? rawZip.slice(0,1) : rawZip.slice(0,1); // first letter/digit = region
-    const toGeocode = allSC.filter(s => !s.lat && s.postal_code && s.country === (isCanada ? 'CA' : 'US'));
-
-    const geocodedNearby = [];
-    let checked = 0;
-    for (const sc of toGeocode) {
-      checked++;
-      const coords = await getCoords(sc);
-      if (!coords) continue;
-      const dist = haversine(cLat, cLng, coords.lat, coords.lng);
-      if (dist <= radius) {
-        // Add a yellow pin for this newly geocoded center
-        const yellowIcon = L.divIcon({
-          className: '',
-          html: `<div style="width:10px;height:10px;background:#FFD100;border:2px solid #000;border-radius:50%;box-shadow:0 0 5px rgba(255,209,0,0.5);opacity:0.8;"></div>`,
-          iconSize: [10, 10], iconAnchor: [5, 5], popupAnchor: [0, -6]
-        });
-        const m = L.marker([coords.lat, coords.lng], { icon: yellowIcon })
-          .addTo(scMap)
-          .bindPopup(buildPopup(sc, dist), { maxWidth: 260 });
-        scMarkers.push({ marker: m, sc: { ...sc, lat: coords.lat, lng: coords.lng } });
-        markerById[sc.id] = m;  // store for click lookup
-        geocodedNearby.push({ ...sc, lat: coords.lat, lng: coords.lng, dist });
-      }
-      // Update status every 10
-      if (checked % 10 === 0) {
-        status.innerHTML = `⏳ Checking ${checked}/${toGeocode.length} centers...`;
-      }
-    }
-
-    // Final combined results
-    const allNearby = [
-      ...withCoords,
-      ...geocodedNearby
-    ].sort((a, b) => a.dist - b.dist);
-
-    renderResultsList(allNearby, [cLat, cLng]);
-    document.getElementById('sc-results-label').textContent = `${allNearby.length} Results Near ${rawZip}`;
-    status.innerHTML = `✅ <strong>${allNearby.length}</strong> service center${allNearby.length !== 1 ? 's' : ''} within <strong>${radius} miles</strong> of <strong>${rawZip}</strong>`;
-
-    if (allNearby.length && geocodedNearby.length) {
-      const allBounds = L.latLngBounds([[cLat, cLng], ...allNearby.slice(0,20).map(s => [s.lat, s.lng])]);
-      scMap.fitBounds(allBounds, { padding: [50, 50] });
+      status.innerHTML = `✅ Showing service centers near <strong>${zip}</strong> (${label}) — click any yellow pin for details`;
+    } catch(e) {
+      status.textContent = '❌ Search failed. Check your connection and try again.';
     }
   }
 
-  function clearSearch() {
+  function resetSC() {
     document.getElementById('sc-zip').value = '';
-    document.getElementById('sc-search-status').style.display = 'none';
-    document.getElementById('sc-results-label').textContent = 'All Centers with Map Pins';
-    if (scCustomerMarker) { scMap.removeLayer(scCustomerMarker); scCustomerMarker = null; }
-    scMap.setView([39.5, -98.35], 4);
-    const withCoords = allSC.filter(s => s.lat && s.lng);
-    renderResultsList(withCoords.slice(0, 20), null);
-    // Reset popups
-    scMarkers.forEach(({marker, sc}) => marker.setPopupContent(buildPopup(sc, null)));
+    document.getElementById('sc-status').style.display = 'none';
+    document.getElementById('sc-map-frame').src =
+      'https://www.google.com/maps/d/embed?mid=1UKhL_cwua2BbfnMxwRk_GRb6hsY&ehbc=2E312F';
   }
 
-  function renderResultsList(list, customerLatLng) {
-    const el = document.getElementById('sc-results');
-    if (!list.length) {
-      el.innerHTML = `<div style="text-align:center;color:var(--gray-600);font-size:13px;padding:20px;">No service centers found in this radius.<br>Try increasing the search distance.</div>`;
-      return;
-    }
-    el.innerHTML = list.slice(0, 30).map((s, i) => `
-      <div data-lat="${s.lat}" data-lng="${s.lng}" data-id="${s.id}"
-        style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:11px 13px;cursor:pointer;transition:all .15s;"
-        onmouseover="this.style.borderColor='rgba(255,209,0,0.3)';this.style.background='rgba(255,209,0,0.04)'"
-        onmouseout="this.style.borderColor='var(--border)';this.style.background='rgba(255,255,255,0.03)'">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;">
-          <div style="flex:1;">
-            <div style="font-size:12px;font-weight:700;color:var(--white);margin-bottom:2px;line-height:1.3;">${s.name}</div>
-            <div style="font-size:11px;color:var(--gray-500);">${s.city || ''}${s.city && s.province_state ? ', ' : ''}${s.province_state || ''}</div>
-            ${s.phone ? `<div style="font-size:11px;color:var(--gray-400);margin-top:3px;">📞 ${s.phone}</div>` : ''}
-            ${s.email ? `<div style="font-size:11px;color:#4a9eff;margin-top:2px;">✉️ ${s.email}</div>` : ''}
-          </div>
-          <div style="text-align:right;flex-shrink:0;">
-            ${s.dist != null ? `<div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--yellow);">${s.dist.toFixed(1)}</div><div style="font-size:9px;color:var(--gray-400);font-weight:600;">MILES</div>` : `<div style="font-size:10px;color:var(--gray-600);">#${i+1}</div>`}
-          </div>
-        </div>
-        ${s.hsb_dealer ? `<div style="margin-top:5px;background:rgba(255,209,0,0.08);border:1px solid rgba(255,209,0,0.2);color:var(--yellow);font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;display:inline-block;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;">HSB DEALER</div>` : ''}
-      </div>`).join('');
-
-    // Attach click listeners via data attributes (avoids UUID quoting issues)
-    el.querySelectorAll('[data-id]').forEach(card => {
-      card.addEventListener('click', () => {
-        const lat = parseFloat(card.dataset.lat);
-        const lng = parseFloat(card.dataset.lng);
-        const id = card.dataset.id;
-        focusMarker(lat, lng, id);
-      });
-    });
-  }
-
-  // Map from SC id to marker for fast lookup
-  const markerById = {};
-
-  function focusMarker(lat, lng, id) {
-    if (!scMap) return;
-    const fLat = parseFloat(lat);
-    const fLng = parseFloat(lng);
-    if (!fLat || !fLng) return;
-    scMap.setView([fLat, fLng], 14, { animate: true });
-    setTimeout(() => {
-      const m = markerById[id];
-      if (m) {
-        m.openPopup();
-      } else {
-        // Temporary popup for geocoded-on-the-fly markers
-        const sc = allSC.find(s => s.id === id);
-        if (sc) {
-          L.popup({ maxWidth: 260 })
-            .setLatLng([fLat, fLng])
-            .setContent(buildPopup(sc))
-            .openOn(scMap);
-        }
-      }
-    }, 450);
-  }
+  function renderSC(list) {}
+  function renderDirectory(list) {}
+  function filterDirectory() {}
+  function focusMarker() {}
+  function renderResultsList() {}
+  function initMap() {}
+  function clearSearch() {}
 
   function filterDirectory() {
     const q = document.getElementById('sc-dir-search').value.toLowerCase();
