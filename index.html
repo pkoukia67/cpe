@@ -2211,6 +2211,7 @@
         .addTo(scMap)
         .bindPopup(buildPopup(s), { maxWidth: 260 });
       scMarkers.push({ marker, sc: s });
+      markerById[s.id] = marker;  // fast lookup by ID
     });
 
     // Show all pins results list
@@ -2238,95 +2239,149 @@
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   }
 
-  async function searchByZip() {
-    const zip = document.getElementById('sc-zip').value.trim().toUpperCase();
-    const radius = parseInt(document.getElementById('sc-radius').value);
-    if (!zip) { alert('Enter a ZIP or postal code first.'); return; }
-
-    const status = document.getElementById('sc-search-status');
-    status.style.display = 'block';
-    status.textContent = 'Looking up location...';
-
+  async function geocodePostal(zip, isCanada) {
+    // Try Nominatim first
     try {
-      // Geocode the customer ZIP
-      const isCanada = /^[A-Z]\d[A-Z]/.test(zip);
       const country = isCanada ? 'Canada' : 'USA';
       const res = await fetch(
         `https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(zip)}&country=${country}&format=json&limit=1`,
         { headers: {'User-Agent': 'CPE-Wiki/1.0'} }
       );
       const data = await res.json();
-
-      if (!data.length) {
-        status.textContent = '❌ ZIP/postal code not found. Try a different one.';
-        return;
+      if (data.length) return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon), label: data[0].display_name.split(',').slice(0,3).join(',') };
+    } catch(e) {}
+    // Fallback: zippopotam.us
+    try {
+      const country2 = isCanada ? 'ca' : 'us';
+      const res2 = await fetch(`https://api.zippopotam.us/${country2}/${zip}`);
+      if (res2.ok) {
+        const d = await res2.json();
+        if (d.places && d.places.length) {
+          return { lat: parseFloat(d.places[0].latitude), lng: parseFloat(d.places[0].longitude), label: `${d.places[0]['place name']}, ${d.places[0]['state abbreviation']}` };
+        }
       }
+    } catch(e) {}
+    return null;
+  }
 
-      const cLat = parseFloat(data[0].lat);
-      const cLng = parseFloat(data[0].lon);
-      const label = data[0].display_name.split(',').slice(0,2).join(',');
+  // Cache of geocoded postal codes for SC records (so we only geocode once per session)
+  const postalCache = {};
 
-      // Customer marker (red)
-      if (scCustomerMarker) scMap.removeLayer(scCustomerMarker);
-      const customerIcon = L.divIcon({
-        className: '',
-        html: `<div style="width:16px;height:16px;background:#ef4444;border:3px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(239,68,68,0.8);"></div>`,
-        iconSize: [16, 16], iconAnchor: [8, 8]
-      });
-      scCustomerMarker = L.marker([cLat, cLng], { icon: customerIcon })
-        .addTo(scMap)
-        .bindPopup(`<strong>📍 Customer: ${zip}</strong><br>${label}`)
-        .openPopup();
+  async function getCoords(sc) {
+    if (sc.lat && sc.lng) return { lat: parseFloat(sc.lat), lng: parseFloat(sc.lng) };
+    const postal = (sc.postal_code || '').trim().replace(/\s+/g, '');
+    if (!postal) return null;
+    if (postalCache[postal]) return postalCache[postal];
+    const isCanada = sc.country === 'CA';
+    // For Canadian, use FSA (first 3 chars) for faster lookup
+    const lookupPostal = isCanada ? postal.slice(0, 3) : postal;
+    const result = await geocodePostal(lookupPostal, isCanada);
+    if (result) postalCache[postal] = result;
+    return result;
+  }
 
-      // Search 1: centers WITH coords -- calculate real distance
-      const withCoords = allSC.filter(s => s.lat && s.lng);
-      const nearbyWithCoords = withCoords.map(s => ({
-        ...s, dist: haversine(cLat, cLng, s.lat, s.lng)
-      })).filter(s => s.dist <= radius);
+  async function searchByZip() {
+    const rawZip = document.getElementById('sc-zip').value.trim().toUpperCase().replace(/\s+/g, '');
+    const radius = parseInt(document.getElementById('sc-radius').value);
+    if (!rawZip) { alert('Enter a ZIP or postal code first.'); return; }
 
-      // Search 2: centers WITHOUT coords -- match by postal code prefix
-      // Canadian: first 3 chars (forward sortation area), US: first 3 digits
-      const zipPrefix = isCanada ? zip.slice(0,3) : zip.slice(0,3);
-      const withoutCoords = allSC.filter(s => !s.lat && s.postal_code);
-      const nearbyNoCoords = withoutCoords.filter(s => {
-        const pc = s.postal_code.toUpperCase().replace(/\s/g,'');
-        return pc.startsWith(zipPrefix) || pc === zip.replace(/\s/g,'');
-      }).map(s => ({ ...s, dist: null }));
+    const status = document.getElementById('sc-search-status');
+    status.style.display = 'block';
+    status.innerHTML = '⏳ Looking up customer location...';
 
-      // Combine: coords-based results first (sorted by distance), then postal matches
-      const allNearby = [
-        ...nearbyWithCoords.sort((a, b) => a.dist - b.dist),
-        ...nearbyNoCoords
-      ];
+    // Geocode the customer's ZIP/postal
+    const isCanada = /^[A-Z]\d[A-Z]/.test(rawZip) || (rawZip.length === 6 && /^[A-Z]/.test(rawZip));
+    const customerResult = await geocodePostal(rawZip, isCanada);
 
-      // Update map view
-      if (nearbyWithCoords.length) {
-        const bounds = L.latLngBounds([
-          [cLat, cLng],
-          ...nearbyWithCoords.slice(0,15).map(s => [s.lat, s.lng])
-        ]);
-        scMap.fitBounds(bounds, { padding: [40, 40] });
-      } else {
-        scMap.setView([cLat, cLng], 10);
+    if (!customerResult) {
+      status.textContent = '❌ ZIP/postal code not found. Try without spaces (e.g. L7L5H7 or 90210).';
+      return;
+    }
+
+    const cLat = customerResult.lat;
+    const cLng = customerResult.lng;
+
+    // Customer marker (red)
+    if (scCustomerMarker) scMap.removeLayer(scCustomerMarker);
+    const customerIcon = L.divIcon({
+      className: '',
+      html: `<div style="width:16px;height:16px;background:#ef4444;border:3px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(239,68,68,0.8);"></div>`,
+      iconSize: [16, 16], iconAnchor: [8, 8]
+    });
+    scCustomerMarker = L.marker([cLat, cLng], { icon: customerIcon })
+      .addTo(scMap)
+      .bindPopup(`<strong>📍 Customer: ${rawZip}</strong><br>${customerResult.label}`)
+      .openPopup();
+
+    scMap.setView([cLat, cLng], 9);
+    status.innerHTML = `⏳ Searching ${allSC.length.toLocaleString()} service centers...`;
+
+    // First pass: centers WITH coords -- instant
+    const withCoords = allSC.filter(s => s.lat && s.lng).map(s => ({
+      ...s,
+      dist: haversine(cLat, cLng, parseFloat(s.lat), parseFloat(s.lng))
+    })).filter(s => s.dist <= radius).sort((a, b) => a.dist - b.dist);
+
+    // Show immediate results while we geocode the rest
+    renderResultsList(withCoords, [cLat, cLng]);
+    document.getElementById('sc-results-label').textContent = `${withCoords.length} Results Near ${rawZip} (checking more...)`;
+
+    if (withCoords.length) {
+      const bounds = L.latLngBounds([[cLat, cLng], ...withCoords.slice(0,15).map(s => [s.lat, s.lng])]);
+      scMap.fitBounds(bounds, { padding: [50, 50] });
+    }
+
+    // Update existing marker popups with distance
+    scMarkers.forEach(({marker, sc}) => {
+      const d = haversine(cLat, cLng, parseFloat(sc.lat), parseFloat(sc.lng));
+      marker.setPopupContent(buildPopup(sc, d));
+    });
+
+    // Second pass: geocode centers WITHOUT coords near this area
+    // Only try centers in same country and whose postal starts with same region
+    const rawPrefix = isCanada ? rawZip.slice(0,1) : rawZip.slice(0,1); // first letter/digit = region
+    const toGeocode = allSC.filter(s => !s.lat && s.postal_code && s.country === (isCanada ? 'CA' : 'US'));
+
+    const geocodedNearby = [];
+    let checked = 0;
+    for (const sc of toGeocode) {
+      checked++;
+      const coords = await getCoords(sc);
+      if (!coords) continue;
+      const dist = haversine(cLat, cLng, coords.lat, coords.lng);
+      if (dist <= radius) {
+        // Add a yellow pin for this newly geocoded center
+        const yellowIcon = L.divIcon({
+          className: '',
+          html: `<div style="width:10px;height:10px;background:#FFD100;border:2px solid #000;border-radius:50%;box-shadow:0 0 5px rgba(255,209,0,0.5);opacity:0.8;"></div>`,
+          iconSize: [10, 10], iconAnchor: [5, 5], popupAnchor: [0, -6]
+        });
+        const m = L.marker([coords.lat, coords.lng], { icon: yellowIcon })
+          .addTo(scMap)
+          .bindPopup(buildPopup(sc, dist), { maxWidth: 260 });
+        scMarkers.push({ marker: m, sc: { ...sc, lat: coords.lat, lng: coords.lng } });
+        markerById[sc.id] = m;  // store for click lookup
+        geocodedNearby.push({ ...sc, lat: coords.lat, lng: coords.lng, dist });
       }
+      // Update status every 10
+      if (checked % 10 === 0) {
+        status.innerHTML = `⏳ Checking ${checked}/${toGeocode.length} centers...`;
+      }
+    }
 
-      // Update popups with distance
-      scMarkers.forEach(({marker, sc}) => {
-        const d = haversine(cLat, cLng, sc.lat, sc.lng);
-        marker.setPopupContent(buildPopup(sc, d));
-      });
+    // Final combined results
+    const allNearby = [
+      ...withCoords,
+      ...geocodedNearby
+    ].sort((a, b) => a.dist - b.dist);
 
-      const totalFound = allNearby.length;
-      const coordCount = nearbyWithCoords.length;
-      const postalCount = nearbyNoCoords.length;
+    renderResultsList(allNearby, [cLat, cLng]);
+    document.getElementById('sc-results-label').textContent = `${allNearby.length} Results Near ${rawZip}`;
+    status.innerHTML = `✅ <strong>${allNearby.length}</strong> service center${allNearby.length !== 1 ? 's' : ''} within <strong>${radius} miles</strong> of <strong>${rawZip}</strong>`;
 
-      status.innerHTML = `✅ <strong>${totalFound}</strong> service center${totalFound !== 1 ? 's' : ''} near <strong>${zip}</strong> — ${coordCount} on map${postalCount ? `, ${postalCount} matched by postal code (no map pin)` : ''}`;
-      document.getElementById('sc-results-label').textContent = `${totalFound} Results Near ${zip}`;
-      renderResultsList(allNearby, [cLat, cLng]);
-
-    } catch(e) {
-      status.textContent = '❌ Search failed — check your connection and try again.';
-      console.error(e);
+    if (allNearby.length && geocodedNearby.length) {
+      const allBounds = L.latLngBounds([[cLat, cLng], ...allNearby.slice(0,20).map(s => [s.lat, s.lng])]);
+      scMap.fitBounds(allBounds, { padding: [50, 50] });
     }
   }
 
@@ -2361,7 +2416,7 @@
             ${s.email ? `<div style="font-size:11px;color:#4a9eff;margin-top:2px;">✉️ ${s.email}</div>` : ''}
           </div>
           <div style="text-align:right;flex-shrink:0;">
-            ${s.dist != null ? `<div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--yellow);">${s.dist.toFixed(1)}</div><div style="font-size:9px;color:var(--gray-600);">miles</div>` : `<div style="font-size:10px;color:var(--yellow-dim);font-weight:700;">📮 Postal<br>Match</div>`}
+            ${s.dist != null ? `<div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--yellow);">${s.dist.toFixed(1)}</div><div style="font-size:9px;color:var(--gray-600);">miles</div>` : `<div style="font-size:10px;color:var(--gray-600);">#${i+1}</div>`}
           </div>
         </div>
         ${s.hsb_dealer ? `<div style="margin-top:5px;background:rgba(255,209,0,0.08);border:1px solid rgba(255,209,0,0.2);color:var(--yellow);font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;display:inline-block;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;">HSB DEALER</div>` : ''}
@@ -2378,35 +2433,27 @@
     });
   }
 
+  // Map from SC id to marker for fast lookup
+  const markerById = {};
+
   function focusMarker(lat, lng, id) {
     if (!scMap) return;
     const fLat = parseFloat(lat);
     const fLng = parseFloat(lng);
     if (!fLat || !fLng) return;
-
     scMap.setView([fLat, fLng], 14, { animate: true });
-
     setTimeout(() => {
-      // Try ID match first
-      let found = scMarkers.find(m => m.sc.id === id);
-      // Fallback: match by coordinates
-      if (!found) {
-        found = scMarkers.find(m =>
-          Math.abs(m.sc.lat - fLat) < 0.0001 &&
-          Math.abs(m.sc.lng - fLng) < 0.0001
-        );
-      }
-      if (found) {
-        found.marker.openPopup();
+      const m = markerById[id];
+      if (m) {
+        m.openPopup();
       } else {
-        // No existing marker -- create a temporary one
+        // Temporary popup for geocoded-on-the-fly markers
         const sc = allSC.find(s => s.id === id);
         if (sc) {
-          const tmpMarker = L.marker([fLat, fLng])
-            .addTo(scMap)
-            .bindPopup(buildPopup(sc), { maxWidth: 260 })
-            .openPopup();
-          setTimeout(() => scMap.removeLayer(tmpMarker), 8000);
+          L.popup({ maxWidth: 260 })
+            .setLatLng([fLat, fLng])
+            .setContent(buildPopup(sc))
+            .openOn(scMap);
         }
       }
     }, 450);
