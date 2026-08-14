@@ -2239,7 +2239,7 @@
   }
 
   async function searchByZip() {
-    const zip = document.getElementById('sc-zip').value.trim();
+    const zip = document.getElementById('sc-zip').value.trim().toUpperCase();
     const radius = parseInt(document.getElementById('sc-radius').value);
     if (!zip) { alert('Enter a ZIP or postal code first.'); return; }
 
@@ -2247,22 +2247,26 @@
     status.style.display = 'block';
     status.textContent = 'Looking up location...';
 
-    // Geocode the ZIP via Nominatim
     try {
-      const country = /^[a-zA-Z]/.test(zip) ? 'Canada' : 'USA';
-      const res = await fetch(`https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(zip)}&country=${country}&format=json&limit=1`, {
-        headers: {'User-Agent': 'CPE-Wiki/1.0'}
-      });
+      // Geocode the customer ZIP
+      const isCanada = /^[A-Z]\d[A-Z]/.test(zip);
+      const country = isCanada ? 'Canada' : 'USA';
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(zip)}&country=${country}&format=json&limit=1`,
+        { headers: {'User-Agent': 'CPE-Wiki/1.0'} }
+      );
       const data = await res.json();
+
       if (!data.length) {
         status.textContent = '❌ ZIP/postal code not found. Try a different one.';
         return;
       }
+
       const cLat = parseFloat(data[0].lat);
       const cLng = parseFloat(data[0].lon);
       const label = data[0].display_name.split(',').slice(0,2).join(',');
 
-      // Customer marker
+      // Customer marker (red)
       if (scCustomerMarker) scMap.removeLayer(scCustomerMarker);
       const customerIcon = L.divIcon({
         className: '',
@@ -2271,42 +2275,58 @@
       });
       scCustomerMarker = L.marker([cLat, cLng], { icon: customerIcon })
         .addTo(scMap)
-        .bindPopup(`<strong>📍 Customer Location</strong><br>${label}`)
+        .bindPopup(`<strong>📍 Customer: ${zip}</strong><br>${label}`)
         .openPopup();
 
-      // Find centers within radius that have coords
+      // Search 1: centers WITH coords -- calculate real distance
       const withCoords = allSC.filter(s => s.lat && s.lng);
-      const nearby = withCoords.map(s => ({
+      const nearbyWithCoords = withCoords.map(s => ({
         ...s, dist: haversine(cLat, cLng, s.lat, s.lng)
-      })).filter(s => s.dist <= radius).sort((a, b) => a.dist - b.dist);
+      })).filter(s => s.dist <= radius);
 
-      // Update map
-      const yellowIcon = L.divIcon({
-        className: '',
-        html: `<div style="width:12px;height:12px;background:#FFD100;border:2px solid #000;border-radius:50%;box-shadow:0 0 6px rgba(255,209,0,0.6);"></div>`,
-        iconSize: [12, 12], iconAnchor: [6, 6], popupAnchor: [0, -8]
-      });
+      // Search 2: centers WITHOUT coords -- match by postal code prefix
+      // Canadian: first 3 chars (forward sortation area), US: first 3 digits
+      const zipPrefix = isCanada ? zip.slice(0,3) : zip.slice(0,3);
+      const withoutCoords = allSC.filter(s => !s.lat && s.postal_code);
+      const nearbyNoCoords = withoutCoords.filter(s => {
+        const pc = s.postal_code.toUpperCase().replace(/\s/g,'');
+        return pc.startsWith(zipPrefix) || pc === zip.replace(/\s/g,'');
+      }).map(s => ({ ...s, dist: null }));
 
-      // Refresh markers with distance popups
+      // Combine: coords-based results first (sorted by distance), then postal matches
+      const allNearby = [
+        ...nearbyWithCoords.sort((a, b) => a.dist - b.dist),
+        ...nearbyNoCoords
+      ];
+
+      // Update map view
+      if (nearbyWithCoords.length) {
+        const bounds = L.latLngBounds([
+          [cLat, cLng],
+          ...nearbyWithCoords.slice(0,15).map(s => [s.lat, s.lng])
+        ]);
+        scMap.fitBounds(bounds, { padding: [40, 40] });
+      } else {
+        scMap.setView([cLat, cLng], 10);
+      }
+
+      // Update popups with distance
       scMarkers.forEach(({marker, sc}) => {
         const d = haversine(cLat, cLng, sc.lat, sc.lng);
         marker.setPopupContent(buildPopup(sc, d));
       });
 
-      // Fit map to results
-      if (nearby.length) {
-        const bounds = L.latLngBounds([[cLat, cLng], ...nearby.slice(0,10).map(s => [s.lat, s.lng])]);
-        scMap.fitBounds(bounds, { padding: [40, 40] });
-      } else {
-        scMap.setView([cLat, cLng], 9);
-      }
+      const totalFound = allNearby.length;
+      const coordCount = nearbyWithCoords.length;
+      const postalCount = nearbyNoCoords.length;
 
-      status.textContent = `✅ Found ${nearby.length} service center${nearby.length !== 1 ? 's' : ''} within ${radius} miles of ${zip}`;
-      document.getElementById('sc-results-label').textContent = `${nearby.length} Results Near ${zip}`;
-      renderResultsList(nearby, [cLat, cLng]);
+      status.innerHTML = `✅ <strong>${totalFound}</strong> service center${totalFound !== 1 ? 's' : ''} near <strong>${zip}</strong> — ${coordCount} on map${postalCount ? `, ${postalCount} matched by postal code (no map pin)` : ''}`;
+      document.getElementById('sc-results-label').textContent = `${totalFound} Results Near ${zip}`;
+      renderResultsList(allNearby, [cLat, cLng]);
 
     } catch(e) {
       status.textContent = '❌ Search failed — check your connection and try again.';
+      console.error(e);
     }
   }
 
@@ -2341,7 +2361,7 @@
             ${s.email ? `<div style="font-size:11px;color:#4a9eff;margin-top:2px;">✉️ ${s.email}</div>` : ''}
           </div>
           <div style="text-align:right;flex-shrink:0;">
-            ${s.dist != null ? `<div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--yellow);">${s.dist.toFixed(1)}</div><div style="font-size:9px;color:var(--gray-600);">miles</div>` : `<div style="font-size:10px;color:var(--gray-600);">#${i+1}</div>`}
+            ${s.dist != null ? `<div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--yellow);">${s.dist.toFixed(1)}</div><div style="font-size:9px;color:var(--gray-600);">miles</div>` : `<div style="font-size:10px;color:var(--yellow-dim);font-weight:700;">📮 Postal<br>Match</div>`}
           </div>
         </div>
         ${s.hsb_dealer ? `<div style="margin-top:5px;background:rgba(255,209,0,0.08);border:1px solid rgba(255,209,0,0.2);color:var(--yellow);font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;display:inline-block;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;">HSB DEALER</div>` : ''}
@@ -2359,15 +2379,37 @@
   }
 
   function focusMarker(lat, lng, id) {
-    if (!scMap || !lat || !lng) return;
-    scMap.setView([parseFloat(lat), parseFloat(lng)], 14, { animate: true });
-    // Find and open the popup for this marker
+    if (!scMap) return;
+    const fLat = parseFloat(lat);
+    const fLng = parseFloat(lng);
+    if (!fLat || !fLng) return;
+
+    scMap.setView([fLat, fLng], 14, { animate: true });
+
     setTimeout(() => {
-      const found = scMarkers.find(m => m.sc.id === id);
+      // Try ID match first
+      let found = scMarkers.find(m => m.sc.id === id);
+      // Fallback: match by coordinates
+      if (!found) {
+        found = scMarkers.find(m =>
+          Math.abs(m.sc.lat - fLat) < 0.0001 &&
+          Math.abs(m.sc.lng - fLng) < 0.0001
+        );
+      }
       if (found) {
         found.marker.openPopup();
+      } else {
+        // No existing marker -- create a temporary one
+        const sc = allSC.find(s => s.id === id);
+        if (sc) {
+          const tmpMarker = L.marker([fLat, fLng])
+            .addTo(scMap)
+            .bindPopup(buildPopup(sc), { maxWidth: 260 })
+            .openPopup();
+          setTimeout(() => scMap.removeLayer(tmpMarker), 8000);
+        }
       }
-    }, 400);
+    }, 450);
   }
 
   function filterDirectory() {
