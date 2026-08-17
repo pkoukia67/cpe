@@ -1,38 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="color-scheme: light; background-color:#F1EFE8;">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CPE Customer Service — Internal Wiki</title>
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --yellow: #FFD100;
-    --yellow-dark: #E6BC00;
-    --yellow-dim: #B89600;
-    --yellow-glow: rgba(255,209,0,0.18);
-    --yellow-glow-soft: rgba(255,209,0,0.08);
-    --yellow-glow-strong: rgba(255,209,0,0.32);
-    --orange-glow: rgba(255,140,0,0.12);
-    --black: #060606;
-    --gray-900: #0e0e0e;
-    --gray-800: #171717;
-    --gray-750: #1e1e1e;
-    --gray-700: #282828;
-    --gray-600: #404040;
-    --gray-500: #585858;
-    --gray-400: #808080;
-    --gray-300: #B0B0B0;
-    --white: #FFFFFF;
-    --red: #D93535;
-    --green: #3DAA5C;
-    --border: rgba(255,255,255,0.07);
-    --border-yellow: rgba(255,209,0,0.2);
+    color-scheme: light only;
+    --yellow: #0C447C;
+    --yellow-dark: #042C53;
+    --yellow-dim: #2F72B5;
+    --yellow-glow: rgba(12,68,124,0.14);
+    --yellow-glow-soft: rgba(12,68,124,0.06);
+    --yellow-glow-strong: rgba(12,68,124,0.24);
+    --orange-glow: rgba(12,68,124,0.10);
+    --black: #F1EFE8;
+    --gray-900: #FFFFFF;
+    --gray-800: #FAF8F3;
+    --gray-750: #F1EFE8;
+    --gray-700: #D8D5CA;
+    --gray-600: #9AA3AC;
+    --gray-500: #667585;
+    --gray-400: #64717F;
+    --gray-300: #38434E;
+    --white: #142433;
+    --red: #C0392B;
+    --green: #2E7D4F;
+    --border: rgba(74,78,84,0.13);
+    --border-yellow: rgba(12,68,124,0.28);
     --radius-lg: 20px;
     --radius-md: 12px;
     --radius-sm: 8px;
-    --shadow-card: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
-    --shadow-yellow: 0 0 40px var(--yellow-glow), 0 0 80px rgba(255,209,0,0.06);
+    --shadow-card: 0 6px 24px rgba(74,78,84,0.08), 0 0 0 1px rgba(74,78,84,0.07);
+    --shadow-yellow: 0 6px 24px rgba(12,68,124,0.16);
   }
 
   /* ─── RESET ─── */
@@ -58,14 +62,14 @@
   .glow-1 {
     width: 600px; height: 600px;
     top: -200px; left: -150px;
-    background: radial-gradient(circle, rgba(255,209,0,0.14) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(12,68,124,0.05) 0%, transparent 70%);
     animation-delay: 0s;
   }
 
   .glow-2 {
     width: 500px; height: 500px;
     bottom: -180px; right: -100px;
-    background: radial-gradient(circle, rgba(255,140,0,0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(53,122,190,0.045) 0%, transparent 70%);
     animation-delay: 3s;
   }
 
@@ -73,7 +77,7 @@
     width: 300px; height: 300px;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(255,209,0,0.04) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(12,68,124,0.05) 0%, transparent 70%);
     animation-delay: 6s;
   }
 
@@ -96,7 +100,8 @@
 
   /* ─── HEADER ─── */
   header {
-    background: rgba(6,6,6,0.85);
+    background-color: #FFFFFF !important;
+    forced-color-adjust: none;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
@@ -123,7 +128,7 @@
   .logo { display: flex; align-items: center; gap: 12px; }
 
   .logo-badge {
-    background: linear-gradient(135deg, var(--yellow), #ffbc00);
+    background: linear-gradient(135deg, var(--yellow), #042C53);
     color: var(--black);
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 900;
@@ -137,7 +142,7 @@
 
   @keyframes badgePulse {
     0%, 100% { box-shadow: 0 0 20px var(--yellow-glow-strong); }
-    50% { box-shadow: 0 0 32px rgba(255,209,0,0.5), 0 0 60px rgba(255,209,0,0.15); }
+    50% { box-shadow: 0 0 32px rgba(12,68,124,0.5), 0 0 60px rgba(12,68,124,0.15); }
   }
 
   .logo-wordmark {
@@ -147,13 +152,13 @@
     letter-spacing: 0.4px;
     color: var(--gray-400);
   }
-  .logo-wordmark strong { color: var(--white); }
+  .logo-wordmark strong { color: #042C53; }
 
   .header-right { display: flex; align-items: center; gap: 12px; }
-  .header-right > span { font-size: 11px; color: var(--gray-300); font-weight: 500; }
+  .header-right > span { font-size: 11px; color: var(--gray-500); font-weight: 500; }
 
   .mgr-pill {
-    background: linear-gradient(135deg, var(--yellow), #ffbc00);
+    background: linear-gradient(135deg, var(--yellow), #042C53);
     color: var(--black);
     font-size: 11px;
     font-family: 'Barlow Condensed', sans-serif;
@@ -168,7 +173,7 @@
   .mgr-pill.show { display: inline-flex; align-items: center; gap: 5px; }
 
   .mgr-lock-btn {
-    background: rgba(255,255,255,0.05);
+    background: rgba(74,78,84,0.057);
     border: 1px solid var(--border);
     color: var(--gray-400);
     font-size: 12px;
@@ -199,7 +204,8 @@
   .sidebar {
     width: 218px;
     flex-shrink: 0;
-    background: rgba(6,6,6,0.7);
+    background-color: #FFFFFF !important;
+    forced-color-adjust: none;
     backdrop-filter: blur(16px);
     border-right: 1px solid var(--border);
     display: flex;
@@ -237,20 +243,20 @@
   }
 
   .nav-item:hover {
-    background: rgba(255,255,255,0.03);
+    background: rgba(74,78,84,0.034);
     color: var(--gray-300);
     border-left-color: var(--gray-700);
   }
 
   .nav-item.active {
-    background: linear-gradient(90deg, rgba(255,209,0,0.1) 0%, rgba(255,209,0,0.02) 100%);
+    background: linear-gradient(90deg, rgba(12,68,124,0.1) 0%, rgba(12,68,124,0.02) 100%);
     color: var(--yellow);
     border-left-color: var(--yellow);
     font-weight: 600;
   }
 
   .nav-item.active .nav-icon {
-    filter: drop-shadow(0 0 5px rgba(255,209,0,0.7));
+    
     animation: iconPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
   }
 
@@ -264,13 +270,14 @@
 
   .nav-divider { height: 1px; background: var(--border); margin: 10px 14px; }
 
-  .nav-item.mgr { color: #5a4800; }
-  .nav-item.mgr:hover { color: var(--yellow-dim); background: rgba(255,209,0,0.03); border-left-color: rgba(255,209,0,0.3); }
-  .nav-item.mgr.active { color: var(--yellow); background: linear-gradient(90deg, rgba(255,209,0,0.1) 0%, transparent 100%); border-left-color: var(--yellow); }
+  .nav-item.mgr { color: #9AA3AC; }
+  .nav-item.mgr:hover { color: var(--yellow-dim); background: rgba(12,68,124,0.03); border-left-color: rgba(12,68,124,0.3); }
+  .nav-item.mgr.active { color: var(--yellow); background: linear-gradient(90deg, rgba(12,68,124,0.1) 0%, transparent 100%); border-left-color: var(--yellow); }
 
   /* ─── SEARCH BAR ─── */
   .search-bar {
-    background: rgba(255,255,255,0.06);
+    background-color: #FFFFFF !important;
+    forced-color-adjust: none;
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     padding: 10px 24px;
@@ -285,8 +292,8 @@
 
   .search-wrap input {
     width: 100%;
-    background: rgba(255,255,255,0.09);
-    border: 1px solid rgba(255,255,255,0.18);
+    background: #F1EFE8;
+    border: 1px solid rgba(74,78,84,0.16);
     color: var(--white);
     padding: 9px 14px 9px 36px;
     font-family: 'Barlow', sans-serif;
@@ -297,9 +304,9 @@
   }
 
   .search-wrap input:focus {
-    background: rgba(255,209,0,0.04);
-    border-color: rgba(255,209,0,0.4);
-    box-shadow: 0 0 0 3px rgba(255,209,0,0.08), 0 0 20px rgba(255,209,0,0.1);
+    background: rgba(12,68,124,0.04);
+    border-color: rgba(12,68,124,0.4);
+    box-shadow: 0 0 0 3px rgba(12,68,124,0.08), 0 0 20px rgba(12,68,124,0.1);
   }
   .search-wrap input::placeholder { color: var(--gray-400); }
   .search-hint { font-size: 11px; color: var(--gray-600); }
@@ -309,7 +316,7 @@
     flex: 1;
     overflow-y: auto;
     padding: 32px 40px;
-    background: transparent;
+    background-color: #F1EFE8;
   }
 
   .content::-webkit-scrollbar { width: 4px; }
@@ -366,13 +373,13 @@
     line-height: 1;
   }
 
-  .ph h1 em { color: var(--yellow); font-style: normal; text-shadow: 0 0 30px rgba(255,209,0,0.4); }
+  .ph h1 em { color: var(--yellow); font-style: normal;  }
   .ph p { color: var(--gray-500); font-size: 13px; margin-top: 7px; }
 
   /* ─── NOTICE ─── */
   .notice {
-    background: rgba(255,209,0,0.04);
-    border: 1px solid rgba(255,209,0,0.14);
+    background: rgba(12,68,124,0.04);
+    border: 1px solid rgba(12,68,124,0.14);
     border-left: 3px solid var(--yellow);
     border-radius: var(--radius-md);
     padding: 13px 17px;
@@ -399,7 +406,7 @@
   }
 
   .stat {
-    background: rgba(255,255,255,0.03);
+    background: rgba(74,78,84,0.034);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 18px 22px;
@@ -430,9 +437,9 @@
 
   .stat:hover {
     border-color: var(--border-yellow);
-    background: rgba(255,209,0,0.05);
+    background: rgba(12,68,124,0.05);
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 20px rgba(255,209,0,0.06);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 20px rgba(12,68,124,0.06);
   }
 
   .stat-n {
@@ -441,7 +448,7 @@
     font-weight: 900;
     color: var(--yellow);
     line-height: 1;
-    text-shadow: 0 0 24px rgba(255,209,0,0.35);
+    text-shadow: 0 0 24px rgba(12,68,124,0.35);
   }
 
   .stat-l {
@@ -456,17 +463,21 @@
   /* ─── HOME CARDS ─── */
   .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
   }
 
   .card {
-    background: rgba(255,255,255,0.03);
+    background: #FFFFFF;
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 24px 20px;
+    padding: 30px 20px 26px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1), border-color 0.25s, background 0.25s, box-shadow 0.25s;
     position: relative;
     overflow: hidden;
@@ -498,7 +509,7 @@
     bottom: -50px; right: -50px;
     width: 150px; height: 150px;
     border-radius: 50%;
-    background: rgba(255,209,0,0.07);
+    background: transparent;
     transition: all 0.35s ease;
     pointer-events: none;
   }
@@ -510,21 +521,21 @@
     top: 0; left: -100%;
     width: 55%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,209,0,0.05), transparent);
+    background: linear-gradient(90deg, transparent, rgba(12,68,124,0.05), transparent);
     transition: left 0.55s ease;
     pointer-events: none;
   }
 
   .card:hover {
-    transform: translateY(-8px) scale(1.015);
-    border-color: rgba(255,209,0,0.3);
-    background: rgba(255,209,0,0.05);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(255,209,0,0.08), 0 0 0 1px rgba(255,209,0,0.1);
+    transform: translateY(-6px);
+    border-color: rgba(12,68,124,0.42);
+    background: #FFFFFF;
+    box-shadow: 0 12px 28px rgba(74,78,84,0.10);
   }
 
   .card:hover::after {
     width: 200px; height: 200px;
-    background: rgba(255,209,0,0.12);
+    background: rgba(12,68,124,0.05);
     bottom: -60px; right: -60px;
   }
 
@@ -532,35 +543,34 @@
 
   /* Large rounded icon box like the mock */
   .card-ico {
-    width: 54px;
-    height: 54px;
-    border-radius: 16px;
-    background: rgba(255,209,0,0.1);
-    border: 1px solid rgba(255,209,0,0.15);
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background: #EAF3DE;
+    border: 1px solid #C9DFA6;
     display: grid;
     place-items: center;
-    font-size: 26px;
-    margin-bottom: 16px;
+    font-size: 28px;
+    margin-bottom: 18px;
     transition: all 0.25s ease;
   }
 
   .card:hover .card-ico {
-    background: rgba(255,209,0,0.18);
-    box-shadow: 0 0 20px rgba(255,209,0,0.2);
-    transform: scale(1.08) rotate(-3deg);
+    background: #3B6D11;
+    border-color: #3B6D11;
+    transform: scale(1.06);
   }
 
   .card-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    margin-bottom: 7px;
-    color: var(--white);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    margin-bottom: 8px;
+    color: #042C53;
   }
 
-  .card-desc { font-size: 12px; color: var(--gray-500); line-height: 1.55; }
+  .card-desc { font-size: 12.5px; color: var(--gray-500); line-height: 1.55; max-width: 240px; }
 
   /* Pill tag like the mock */
   .card-badge {
@@ -569,8 +579,8 @@
     display: inline-flex;
     padding: 5px 10px;
     border-radius: 999px;
-    background: rgba(255,209,0,0.08);
-    border: 1px solid rgba(255,209,0,0.18);
+    background: rgba(12,68,124,0.08);
+    border: 1px solid rgba(12,68,124,0.18);
     font-size: 10px;
     color: var(--yellow-dim);
     font-weight: 700;
@@ -579,14 +589,14 @@
   }
 
   .card.mgr {
-    border-color: rgba(255,209,0,0.06);
-    background: rgba(255,209,0,0.02);
+    border-color: rgba(74,78,84,0.2);
+    background: #F7F5EF;
   }
-  .card.mgr:hover { border-color: rgba(255,209,0,0.28); }
+  .card.mgr:hover { border-color: rgba(12,68,124,0.28); }
 
   /* ─── ACCORDION ─── */
   .acc {
-    background: rgba(255,255,255,0.025);
+    background: #FFFFFF;
     backdrop-filter: blur(8px);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -602,22 +612,22 @@
   .acc:nth-child(4) { animation-delay: 0.20s; }
   .acc:nth-child(5) { animation-delay: 0.25s; }
 
-  .acc:hover { border-color: rgba(255,255,255,0.1); }
-  .acc:has(.acc-hd.open) { border-color: rgba(255,209,0,0.18); }
+  .acc:hover { border-color: rgba(74,78,84,0.115); }
+  .acc:has(.acc-hd.open) { border-color: rgba(12,68,124,0.18); }
 
   .acc-hd {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 13px 16px;
-    background: rgba(255,255,255,0.02);
+    background: rgba(74,78,84,0.023);
     cursor: pointer;
     user-select: none;
     transition: background 0.18s;
   }
 
-  .acc-hd:hover { background: rgba(255,255,255,0.04); }
-  .acc-hd.open { background: rgba(255,209,0,0.05); }
+  .acc-hd:hover { background: rgba(74,78,84,0.046); }
+  .acc-hd.open { background: rgba(12,68,124,0.05); }
 
   .acc-hd h3 {
     font-family: 'Barlow Condensed', sans-serif;
@@ -641,13 +651,13 @@
 
   /* ─── SUB-ACCORDION ─── */
   .acc-sub {
-    background: rgba(0,0,0,0.25);
+    background: rgba(74,78,84,0.035);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     margin-bottom: 8px;
     overflow: hidden;
   }
-  .acc-sub .acc-hd { background: rgba(255,255,255,0.02); padding: 9px 13px; }
+  .acc-sub .acc-hd { background: rgba(74,78,84,0.023); padding: 9px 13px; }
   .acc-sub .acc-hd h3 { font-size: 13px; }
   .acc-sub .acc-bd { padding: 10px 13px; }
 
@@ -666,7 +676,7 @@
     color: var(--gray-300);
   }
 
-  .flist li:hover { background: rgba(255,255,255,0.05); color: var(--white); transform: translateX(3px); }
+  .flist li:hover { background: rgba(74,78,84,0.057); color: var(--white); transform: translateX(3px); }
   .flist li .fi { font-size: 13px; flex-shrink: 0; }
 
   .ftag {
@@ -681,31 +691,31 @@
     text-transform: uppercase;
   }
 
-  .ftag-guide  { background: rgba(93,189,93,0.1);  color: #5dbd5d; border: 1px solid rgba(93,189,93,0.22); }
-  .ftag-form   { background: rgba(96,149,224,0.1); color: #6095e0; border: 1px solid rgba(96,149,224,0.22); }
-  .ftag-policy { background: rgba(224,96,96,0.1);  color: #e06060; border: 1px solid rgba(224,96,96,0.22); }
-  .ftag-ref    { background: rgba(212,168,67,0.1); color: #d4a843; border: 1px solid rgba(212,168,67,0.22); }
-  .ftag-flow   { background: rgba(89,184,216,0.1); color: #59b8d8; border: 1px solid rgba(89,184,216,0.22); }
+  .ftag-guide  { background: rgba(93,189,93,0.1);  color: #2E7D4F; border: 1px solid rgba(93,189,93,0.22); }
+  .ftag-form   { background: rgba(96,149,224,0.1); color: #0C447C; border: 1px solid rgba(96,149,224,0.22); }
+  .ftag-policy { background: rgba(224,96,96,0.1);  color: #C0392B; border: 1px solid rgba(224,96,96,0.22); }
+  .ftag-ref    { background: rgba(212,168,67,0.1); color: #8A6510; border: 1px solid rgba(212,168,67,0.22); }
+  .ftag-flow   { background: rgba(89,184,216,0.1); color: #4A7A2E; border: 1px solid rgba(89,184,216,0.22); }
 
   /* ─── PLACEHOLDER ─── */
   .phz {
-    border: 1px dashed rgba(255,255,255,0.1);
+    border: 1px dashed rgba(74,78,84,0.115);
     border-radius: var(--radius-md);
     padding: 26px 20px;
     text-align: center;
     color: var(--gray-600);
     font-size: 13px;
     margin-top: 10px;
-    background: rgba(255,255,255,0.01);
+    background: rgba(74,78,84,0.011);
     transition: border-color 0.2s, background 0.2s;
   }
-  .phz:hover { border-color: rgba(255,209,0,0.2); background: rgba(255,209,0,0.02); }
+  .phz:hover { border-color: rgba(12,68,124,0.2); background: rgba(12,68,124,0.02); }
   .phz .phico { font-size: 28px; margin-bottom: 8px; display: block; opacity: 0.5; }
   .phz strong { color: var(--gray-400); display: block; margin-bottom: 4px; font-size: 13px; }
 
   .ph-btn {
     margin-top: 12px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(74,78,84,0.057);
     color: var(--gray-300);
     border: 1px solid var(--border);
     padding: 7px 18px;
@@ -726,7 +736,7 @@
 
   /* ─── ARTICLE TABLE ─── */
   .art-tbl {
-    background: rgba(255,255,255,0.025);
+    background: #FFFFFF;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     overflow: hidden;
@@ -738,7 +748,7 @@
     grid-template-columns: 1fr 150px 95px;
     gap: 8px;
     padding: 10px 16px;
-    background: rgba(255,255,255,0.03);
+    background: rgba(74,78,84,0.034);
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 10px;
     font-weight: 700;
@@ -757,7 +767,7 @@
     cursor: pointer;
     transition: background 0.15s, transform 0.15s;
   }
-  .art-row:hover { background: rgba(255,255,255,0.04); transform: translateX(2px); }
+  .art-row:hover { background: rgba(74,78,84,0.046); transform: translateX(2px); }
   .art-name { font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 7px; }
   .art-cat { font-size: 12px; color: var(--gray-500); }
 
@@ -765,7 +775,7 @@
   .ql-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
 
   .ql {
-    background: rgba(255,255,255,0.04);
+    background: rgba(74,78,84,0.046);
     color: var(--gray-300);
     font-size: 11px;
     font-weight: 700;
@@ -792,7 +802,7 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(20,30,40,0.42);
     backdrop-filter: blur(8px);
     z-index: 999;
     align-items: center;
@@ -801,7 +811,7 @@
   .modal-overlay.show { display: flex; }
 
   .modal {
-    background: rgba(20,20,20,0.95);
+    background: #FFFFFF;
     backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-top: 2px solid var(--yellow);
@@ -810,7 +820,7 @@
     width: 370px;
     text-align: center;
     animation: modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
-    box-shadow: 0 0 60px rgba(255,209,0,0.15), 0 30px 80px rgba(0,0,0,0.7);
+    box-shadow: 0 0 60px rgba(12,68,124,0.15), 0 30px 80px rgba(74,78,84,0.18);
   }
 
   @keyframes modalIn {
@@ -838,7 +848,7 @@
 
   .modal input[type="password"] {
     width: 100%;
-    background: rgba(255,255,255,0.05);
+    background: rgba(74,78,84,0.057);
     border: 1px solid var(--border);
     color: var(--white);
     padding: 14px 18px;
@@ -852,9 +862,9 @@
     margin-bottom: 12px;
   }
   .modal input[type="password"]:focus {
-    border-color: rgba(255,209,0,0.5);
-    background: rgba(255,209,0,0.05);
-    box-shadow: 0 0 0 3px rgba(255,209,0,0.1), 0 0 24px rgba(255,209,0,0.15);
+    border-color: rgba(12,68,124,0.5);
+    background: rgba(12,68,124,0.05);
+    box-shadow: 0 0 0 3px rgba(12,68,124,0.1), 0 0 24px rgba(12,68,124,0.15);
   }
 
   .modal-err { color: var(--red); font-size: 13px; margin-bottom: 10px; display: none; font-weight: 500; }
@@ -868,7 +878,7 @@
 
   .btn-unlock {
     width: 100%;
-    background: linear-gradient(135deg, var(--yellow), #ffbc00);
+    background: linear-gradient(135deg, var(--yellow), #042C53);
     color: var(--black);
     border: none;
     padding: 13px;
@@ -881,11 +891,11 @@
     border-radius: var(--radius-md);
     transition: all 0.22s cubic-bezier(0.34,1.2,0.64,1);
     margin-bottom: 12px;
-    box-shadow: 0 4px 20px rgba(255,209,0,0.25);
+    box-shadow: 0 4px 20px rgba(12,68,124,0.25);
   }
   .btn-unlock:hover {
     transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 6px 30px rgba(255,209,0,0.4);
+    box-shadow: 0 6px 30px rgba(12,68,124,0.4);
   }
   .btn-unlock:active { transform: scale(0.97); }
 
@@ -918,19 +928,38 @@
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
     -webkit-text-fill-color: var(--white);
-    -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset;
+    -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset;
   }
-  option { background: #1e1e1e; color: var(--white); }
+  option { background: #FFFFFF; color: var(--white); }
 
   /* ─── BOOST LOW-CONTRAST TEXT ─── */
   .art-cat { color: var(--gray-300) !important; }
   .card-desc { color: var(--gray-300) !important; }
   .nav-item { color: var(--gray-300) !important; }
   .stat-l { color: var(--gray-400) !important; }
-  .search-hint { color: var(--white) !important; font-size: 12px; }
+  .search-hint { color: var(--gray-500) !important; font-size: 12px; }
   .ph p { color: var(--gray-300) !important; }
   .acc-hd h3 { color: var(--white) !important; }
   .flist li { color: var(--gray-300) !important; }
+
+  /* ─── LIGHT THEME LOCK (blocks browser auto-dark inversion) ─── */
+  html, body {
+    color-scheme: light !important;
+    background-color: #F1EFE8 !important;
+  }
+  .content, .app-body, .page {
+    background-color: #F1EFE8 !important;
+  }
+  .card, .acc, .art-tbl, .modal, .stat {
+    background-color: #FFFFFF !important;
+  }
+  .notice { background-color: #EFF2E6 !important; }
+  .card-ico { background-color: #EAF3DE !important; }
+  .card:hover .card-ico { background-color: #3B6D11 !important; }
+  .ph h1, .acc-hd h3, .card-title { color: #042C53 !important; }
+  .ph h1 em, .stat-n { color: #0C447C !important; }
+  body, .ph p, .card-desc, .notice, .flist li, .art-cat { color: #38434E !important; }
+  .logo-wordmark strong { color: #042C53 !important; }
 </style>
 </head>
 <body>
@@ -1147,7 +1176,7 @@
       </div>
 
       <!-- Launch button -->
-      <a href="troubleshooting-combined.html" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;background:var(--yellow);color:var(--black);text-align:center;padding:15px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;text-decoration:none;transition:background .15s;width:100%;" onmouseover="this.style.background='#E6BC00'" onmouseout="this.style.background='#FFD100'">
+      <a href="troubleshooting-combined.html" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;background:var(--yellow);color:var(--black);text-align:center;padding:15px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;text-decoration:none;transition:background .15s;width:100%;" onmouseover="this.style.background='#042C53'" onmouseout="this.style.background='#0C447C'">
         🔧 &nbsp; Open Interactive Troubleshooting Tool ↗
       </a>
       <div style="font-size:11px;color:var(--gray-600);margin-top:8px;text-align:center;">Opens in a new tab — select product, then symptom to begin the diagnostic flow</div>
@@ -1165,9 +1194,9 @@
         <div style="position:relative;flex:1;min-width:220px;max-width:380px;">
           <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gray-600);font-size:13px;">🔍</span>
           <input id="kb-search" type="text" placeholder="Search articles..." oninput="filterKB()"
-            style="width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--white);padding:9px 12px 9px 34px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:999px;outline:none;transition:all .2s;">
+            style="width:100%;background:rgba(74,78,84,0.046);border:1px solid var(--border);color:var(--white);padding:9px 12px 9px 34px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:999px;outline:none;transition:all .2s;">
         </div>
-        <select id="kb-cat" onchange="filterKB()" style="background:#1e1e1e;border:1px solid var(--border);color:var(--gray-300);padding:9px 14px;border-radius:999px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
+        <select id="kb-cat" onchange="filterKB()" style="background:#FFFFFF;border:1px solid var(--border);color:var(--gray-300);padding:9px 14px;border-radius:999px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
           <option value="">All categories</option>
         </select>
         <button id="kb-add-btn" class="mgr-only" onclick="openKBModal()" style="display:none;background:var(--yellow);color:var(--black);border:none;padding:9px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;border-radius:999px;cursor:pointer;">+ Add Article</button>
@@ -1183,8 +1212,8 @@
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray-600);margin-bottom:12px;">Reference Files</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
           <a href="COMMON_QUESTIONS_GENERAL_KNOWLEDGE.html" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--yellow);color:var(--black);text-align:center;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border-radius:8px;text-decoration:none;transition:all .18s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">📚 Common Questions ↗</a>
-          <a href="TECH_CHEAT_SHEET.html" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.05);color:var(--white);text-align:center;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border-radius:8px;text-decoration:none;border:1px solid var(--border);transition:all .18s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">⚡ Tech Cheat Sheet ↗</a>
-          <a href="Troubleshooting_QUICK_REFERENCE.html" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.05);color:var(--white);text-align:center;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border-radius:8px;text-decoration:none;border:1px solid var(--border);transition:all .18s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">🔧 Quick Reference ↗</a>
+          <a href="TECH_CHEAT_SHEET.html" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(74,78,84,0.057);color:var(--white);text-align:center;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border-radius:8px;text-decoration:none;border:1px solid var(--border);transition:all .18s;" onmouseover="this.style.background='rgba(74,78,84,0.092)'" onmouseout="this.style.background='rgba(74,78,84,0.057)'">⚡ Tech Cheat Sheet ↗</a>
+          <a href="Troubleshooting_QUICK_REFERENCE.html" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(74,78,84,0.057);color:var(--white);text-align:center;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border-radius:8px;text-decoration:none;border:1px solid var(--border);transition:all .18s;" onmouseover="this.style.background='rgba(74,78,84,0.092)'" onmouseout="this.style.background='rgba(74,78,84,0.057)'">🔧 Quick Reference ↗</a>
         </div>
       </div>
     </div>
@@ -1198,10 +1227,10 @@
         </div>
         <input type="hidden" id="kb-edit-id">
         <div style="display:grid;gap:10px;margin-bottom:12px;">
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">TITLE *</label><input id="kb-f-title" type="text" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">CATEGORY</label><input id="kb-f-cat" type="text" placeholder="e.g. Troubleshooting, Warranty, Process" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">BODY *</label><textarea id="kb-f-body" rows="5" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;resize:vertical;"></textarea></div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">TAGS (comma separated)</label><input id="kb-f-tags" type="text" placeholder="e.g. fuel, no-start, generator" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">TITLE *</label><input id="kb-f-title" type="text" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">CATEGORY</label><input id="kb-f-cat" type="text" placeholder="e.g. Troubleshooting, Warranty, Process" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">BODY *</label><textarea id="kb-f-body" rows="5" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;resize:vertical;"></textarea></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">TAGS (comma separated)</label><input id="kb-f-tags" type="text" placeholder="e.g. fuel, no-start, generator" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
         </div>
         <div id="kb-modal-err" style="color:var(--red);font-size:12px;margin-bottom:8px;display:none;"></div>
         <div style="display:flex;gap:10px;justify-content:flex-end;">
@@ -1362,11 +1391,11 @@
                   <div style="display:flex;flex-wrap:wrap;gap:4px;">
                     <span style="background:var(--gray-700);color:var(--gray-300);font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.5px;">Main Part #</span>
                     <span style="background:var(--gray-700);color:var(--yellow);font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.5px;">CPE Part #</span>
-                    <span style="background:var(--gray-700);color:#59b8d8;font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.5px;">Substitute #</span>
+                    <span style="background:var(--gray-700);color:#4A7A2E;font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.5px;">Substitute #</span>
                     <span style="background:var(--gray-700);color:var(--gray-300);font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.5px;">Description</span>
                   </div>
                 </div>
-                <a href="parts_substitutions.html" target="_blank" style="display:block;background:var(--yellow);color:var(--black);text-align:center;padding:9px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='#E6BC00'" onmouseout="this.style.background='#FFD100'">Open Table ↗</a>
+                <a href="parts_substitutions.html" target="_blank" style="display:block;background:var(--yellow);color:var(--black);text-align:center;padding:9px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='#042C53'" onmouseout="this.style.background='#0C447C'">Open Table ↗</a>
               </div>
             </div>
 
@@ -1497,22 +1526,23 @@
       </div>
 
       <!-- Search bar -->
-      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 22px;margin-bottom:16px;">
+      <div style="background:rgba(74,78,84,0.034);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 22px;margin-bottom:16px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-500);margin-bottom:12px;">Find Nearest Service Center</div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
           <input id="sc-zip" type="text" placeholder="Enter customer ZIP or Postal Code..."
             onkeydown="if(event.key==='Enter')searchSC()"
-            style="flex:1;min-width:200px;max-width:320px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);color:var(--white);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:14px;border-radius:8px;outline:none;transition:all .2s;"
-            onfocus="this.style.borderColor='rgba(255,209,0,0.5)';this.style.boxShadow='0 0 0 3px rgba(255,209,0,0.08)'"
-            onblur="this.style.borderColor='rgba(255,255,255,0.18)';this.style.boxShadow='none'">
+            style="flex:1;min-width:200px;max-width:320px;background:rgba(74,78,84,0.081);border:1px solid rgba(74,78,84,0.207);color:var(--white);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:14px;border-radius:8px;outline:none;transition:all .2s;"
+            onfocus="this.style.borderColor='rgba(12,68,124,0.5)';this.style.boxShadow='0 0 0 3px rgba(12,68,124,0.08)'"
+            onblur="this.style.borderColor='rgba(74,78,84,0.207)';this.style.boxShadow='none'">
           <button onclick="searchSC()"
             style="background:var(--yellow);color:var(--black);border:none;padding:11px 26px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap;"
-            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 16px rgba(255,209,0,0.35)'"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 16px rgba(12,68,124,0.35)'"
             onmouseout="this.style.transform='none';this.style.boxShadow='none'">🔍 Search</button>
           <button onclick="resetSC()"
-            style="background:rgba(255,255,255,0.05);color:var(--gray-300);border:1px solid var(--border);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:8px;cursor:pointer;">Reset</button>
+            style="background:rgba(74,78,84,0.057);color:var(--gray-300);border:1px solid var(--border);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:8px;cursor:pointer;">Reset</button>
           <a href="https://www.google.com/maps/d/viewer?mid=1UKhL_cwua2BbfnMxwRk_GRb6hsY" target="_blank"
-            style="background:rgba(255,255,255,0.05);color:var(--gray-300);border:1px solid var(--border);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">↗ Full Screen</a>
+            style="background:rgba(74,78,84,0.057);color:var(--gray-300);border:1px solid var(--border);padding:11px 16px;font-family:'Barlow',sans-serif;font-size:13px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">↗ Full Screen</a>
+          <button id="sc-add-btn" class="mgr-only" onclick="openSCModal()" style="display:none;background:rgba(12,68,124,0.12);color:var(--yellow);border:1px solid rgba(12,68,124,0.3);padding:11px 18px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;">+ Add Location</button>
         </div>
         <div id="sc-status" style="font-size:12px;color:var(--gray-400);margin-top:10px;display:none;"></div>
       </div>
@@ -1539,18 +1569,18 @@
         </div>
         <input type="hidden" id="sc-edit-id">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-          <div style="grid-column:1/-1;"><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">NAME *</label><input id="sc-f-name" type="text" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">ADDRESS</label><input id="sc-f-address" type="text" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">CITY</label><input id="sc-f-city" type="text" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">PROVINCE / STATE</label><input id="sc-f-ps" type="text" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div style="grid-column:1/-1;"><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">NAME *</label><input id="sc-f-name" type="text" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">ADDRESS</label><input id="sc-f-address" type="text" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">CITY</label><input id="sc-f-city" type="text" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">PROVINCE / STATE</label><input id="sc-f-ps" type="text" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
           <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">COUNTRY</label>
-            <select id="sc-f-country" style="width:100%;background:#1e1e1e;border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
+            <select id="sc-f-country" style="width:100%;background:#FFFFFF;border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
               <option value="US">United States</option><option value="CA">Canada</option>
             </select>
           </div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">ZIP / POSTAL CODE</label><input id="sc-f-postal" type="text" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">PHONE</label><input id="sc-f-phone" type="text" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
-          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">EMAIL</label><input id="sc-f-email" type="text" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">ZIP / POSTAL CODE</label><input id="sc-f-postal" type="text" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">PHONE</label><input id="sc-f-phone" type="text" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
+          <div><label style="font-size:11px;color:var(--gray-500);display:block;margin-bottom:4px;">EMAIL</label><input id="sc-f-email" type="text" style="width:100%;background:rgba(74,78,84,0.057);border:1px solid var(--border);color:var(--white);padding:9px 12px;border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;"></div>
         </div>
         <div id="sc-modal-err" style="color:var(--red);font-size:12px;margin-bottom:8px;display:none;"></div>
         <div style="display:flex;gap:10px;justify-content:flex-end;">
@@ -1753,9 +1783,9 @@
         <div class="acc-bd open">
           <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
             <button onclick="navByName('servicecenters');setTimeout(()=>openSCModal(),400);" style="background:var(--yellow);color:var(--black);border:none;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;">+ Add New Location</button>
-            <button onclick="navByName('servicecenters')" style="background:rgba(255,255,255,0.06);color:var(--white);border:1px solid var(--border);padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;">View Full Directory ↗</button>
+            <button onclick="navByName('servicecenters')" style="background:rgba(74,78,84,0.069);color:var(--white);border:1px solid var(--border);padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;">View Full Directory ↗</button>
           </div>
-          <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:14px 16px;">
+          <div style="background:rgba(74,78,84,0.023);border:1px solid var(--border);border-radius:8px;padding:14px 16px;">
             <div id="mgr-sc-summary" style="font-size:13px;color:var(--gray-400);">Loading...</div>
           </div>
           <div style="font-size:11px;color:var(--gray-500);margin-top:10px;">To edit or delete a location — click "View Full Directory" then use the Edit / Del buttons on each row.</div>
@@ -1768,9 +1798,9 @@
         <div class="acc-bd open">
           <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
             <button onclick="navByName('knowledge');setTimeout(()=>openKBModal(),400);" style="background:var(--yellow);color:var(--black);border:none;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;">+ Add New Article</button>
-            <button onclick="navByName('knowledge')" style="background:rgba(255,255,255,0.06);color:var(--white);border:1px solid var(--border);padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;">View All Articles ↗</button>
+            <button onclick="navByName('knowledge')" style="background:rgba(74,78,84,0.069);color:var(--white);border:1px solid var(--border);padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-radius:8px;cursor:pointer;transition:all .2s;">View All Articles ↗</button>
           </div>
-          <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:14px 16px;">
+          <div style="background:rgba(74,78,84,0.023);border:1px solid var(--border);border-radius:8px;padding:14px 16px;">
             <div id="mgr-kb-summary" style="font-size:13px;color:var(--gray-400);">Loading...</div>
           </div>
           <div style="font-size:11px;color:var(--gray-500);margin-top:10px;">To edit or delete an article — click "View All Articles" then use the Edit / Del buttons on each article.</div>
@@ -1873,7 +1903,7 @@
 <meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--yellow:#FFD100;--yellow-dark:#E6BC00;--gray-900:#161616;--gray-750:#282828;--gray-700:#323232;--gray-600:#505050;--gray-400:#888888;--white:#FFFFFF;--green:#3DAA5C;--green-bg:#0e1f14;}
+  :root{--yellow:#0C447C;--yellow-dark:#042C53;--gray-900:#FFFFFF;--gray-750:#F1EFE8;--gray-700:#D8D5CA;--gray-600:#93A9BE;--gray-400:#64717F;--white:#142433;--green:#2E7D4F;--green-bg:#EAF5EE;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Barlow',sans-serif;background:var(--gray-900);color:var(--white);padding:14px;display:flex;flex-direction:column;gap:9px;}
   label{display:block;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gray-400);margin-bottom:5px;font-family:'Barlow Condensed',sans-serif;}
@@ -1881,16 +1911,16 @@
   .select-wrap::after{content:'▼';position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:8px;color:var(--gray-400);pointer-events:none;}
   select{width:100%;background:var(--gray-750);border:1px solid var(--gray-600);color:var(--white);padding:8px 26px 8px 9px;font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;border-radius:4px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color 0.15s;}
   select:focus{border-color:var(--yellow);}
-  select option{background:#202020;}
-  button{width:100%;background:var(--yellow);color:#000;border:none;padding:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:background 0.15s;}
+  select option{background:#FFFFFF;}
+  button{width:100%;background:var(--yellow);color:#fff;border:none;padding:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:background 0.15s;}
   button:hover{background:var(--yellow-dark);}
-  .model-tag{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid #1e4029;color:var(--green);font-size:10px;font-weight:700;padding:3px 7px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;margin-bottom:7px;}
+  .model-tag{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid #BEDECB;color:var(--green);font-size:10px;font-weight:700;padding:3px 7px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;margin-bottom:7px;}
   .parts-grid{display:flex;flex-direction:column;gap:5px;}
   .part-row{background:var(--gray-750);border:1px solid var(--gray-700);border-radius:4px;padding:7px 10px;display:flex;flex-direction:column;gap:2px;}
   .part-label{font-size:9.5px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;font-family:'Barlow Condensed',sans-serif;}
   .part-number{font-size:12px;font-weight:600;color:var(--yellow);word-break:break-all;}
-  .part-number.empty{color:var(--gray-600);font-style:italic;font-weight:400;font-size:11px;}
-  .error-msg{background:#1f1010;border-left:3px solid #D93535;border-radius:4px;padding:8px 10px;font-size:11px;color:#e07070;display:none;}
+  .part-number.empty{color:#93A9BE;font-style:italic;font-weight:400;font-size:11px;}
+  .error-msg{background:#FCEDEB;border-left:3px solid #D93535;border-radius:4px;padding:8px 10px;font-size:11px;color:#B03A2E;display:none;}
   .result-wrap{display:none;}
   .result-wrap.show{display:block;}
   .divider{height:1px;background:var(--gray-700);margin:8px 0 6px;}
@@ -1993,7 +2023,7 @@
 <meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--yellow:#FFD100;--yellow-dark:#E6BC00;--gray-900:#161616;--gray-750:#282828;--gray-700:#323232;--gray-600:#505050;--gray-400:#888888;--white:#FFFFFF;--green:#3DAA5C;--green-bg:#0e1f14;--red-bg:#1f1010;}
+  :root{--yellow:#0C447C;--yellow-dark:#042C53;--gray-900:#FFFFFF;--gray-750:#F1EFE8;--gray-700:#D8D5CA;--gray-600:#93A9BE;--gray-400:#64717F;--white:#142433;--green:#2E7D4F;--green-bg:#EAF5EE;--red-bg:#FCEDEB;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Barlow',sans-serif;background:var(--gray-900);color:var(--white);padding:14px;display:flex;flex-direction:column;gap:9px;}
   label{display:block;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gray-400);margin-bottom:5px;font-family:'Barlow Condensed',sans-serif;}
@@ -2001,7 +2031,7 @@
   input[type=text]{width:100%;background:var(--gray-750);border:1px solid var(--gray-600);color:var(--white);padding:8px 9px;font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;border-radius:4px;outline:none;transition:border-color 0.15s;}
   input[type=text]:focus{border-color:var(--yellow);}
   input::placeholder{color:var(--gray-600);}
-  button{width:100%;background:var(--yellow);color:#000;border:none;padding:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:background 0.15s;}
+  button{width:100%;background:var(--yellow);color:#fff;border:none;padding:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:background 0.15s;}
   button:hover{background:var(--yellow-dark);}
   .result-wrap{display:none;}
   .result-wrap.show{display:block;}
@@ -2012,9 +2042,9 @@
   .result-row:last-child{margin-bottom:0;}
   .rlabel{font-size:9.5px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;font-family:'Barlow Condensed',sans-serif;}
   .rvalue{font-size:13px;font-weight:600;color:var(--yellow);word-break:break-all;}
-  .rvalue.note{color:#d4a843;font-size:11px;font-weight:400;font-style:italic;line-height:1.4;}
-  .model-tag{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid #1e4029;color:var(--green);font-size:10px;font-weight:700;padding:3px 7px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;margin-bottom:8px;}
-  .error-msg{background:var(--red-bg);border-left:3px solid #D93535;border-radius:4px;padding:8px 10px;font-size:11px;color:#e07070;display:none;}
+  .rvalue.note{color:#8A6510;font-size:11px;font-weight:400;font-style:italic;line-height:1.4;}
+  .model-tag{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid #BEDECB;color:var(--green);font-size:10px;font-weight:700;padding:3px 7px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;margin-bottom:8px;}
+  .error-msg{background:var(--red-bg);border-left:3px solid #D93535;border-radius:4px;padding:8px 10px;font-size:11px;color:#B03A2E;display:none;}
 </style>
 </head>
 <body>
@@ -2117,6 +2147,8 @@
   }
 
   // ── SERVICE CENTERS ──────────────────────────────
+  const FSA_COORDS = {"G7H":[48.3946,-71.138],"N0B":[43.5472,-80.4538],"N0G":[44.0003,-80.5696],"K0L":[44.5315,-78.0937],"K0G":[44.9042,-76.0343],"B3B":[44.68,-63.572],"P6A":[46.5127,-84.333],"A8A":[49.183,-57.432],"P3C":[46.4927,-80.9912],"V2N":[53.9129,-122.7454],"S0A":[50.9307,-102.8073],"N1R":[43.3601,-80.3123],"T2C":[51.0456,-114.0575],"G5L":[48.4502,-68.53],"N8W":[42.288,-83.0],"K9V":[44.3551,-78.737],"R2J":[49.8955,-97.1385],"L3V":[44.6092,-79.4176],"J9V":[47.3132,-79.4347],"N1H":[43.5461,-80.2493],"E7P":[46.3,-67.5257],"L9Y":[44.5027,-80.2172],"S4A":[49.1428,-102.9911],"T4E":[52.104,-113.7675],"E6C":[46.1179,-66.5415],"M9W":[43.6535,-79.3839],"S7K":[52.1318,-106.6608],"J2B":[48.8891,-64.5548],"N9J":[42.2451,-83.0606],"M6E":[43.6535,-79.3839],"K0J":[46.1013,-77.4876],"K0H":[44.183,-76.7757],"R0H":[49.9012,-97.7579],"N0R":[42.2929,-82.7113],"K7V":[45.7301,-77.2794],"N0K":[43.5658,-80.9222],"P1C":[46.313,-79.461],"V1C":[49.514,-115.77],"E2A":[47.6209,-65.6538],"B2N":[45.3657,-63.2865],"G8B":[48.5489,-71.6515],"A2H":[48.95,-57.93],"L7A":[43.6858,-79.7599],"T7A":[53.2206,-114.9832],"S0N":[49.6508,-108.41],"H3L":[45.5032,-73.5698],"B4N":[45.066,-64.4557],"G3H":[46.7566,-71.6978],"P2B":[46.3653,-79.9322],"N6L":[42.9849,-81.2453],"E3B":[45.9488,-66.6292],"A0A":[47.5759,-53.2833],"J0T":[46.1137,-74.4805],"P8N":[49.7857,-92.8358],"K0C":[45.3179,-74.6398],"J8G":[45.6765,-74.4046],"L0P":[43.5685,-79.8414],"K0K":[44.2014,-77.5958],"A2N":[48.5452,-58.5871],"V2G":[52.1293,-122.1397],"C1A":[46.2354,-63.1265],"B4H":[45.8193,-64.2334],"P6B":[46.5127,-84.333],"L7R":[43.3249,-79.7967],"A1N":[47.524,-52.8117],"L1N":[43.8798,-78.9422],"P0J":[47.8103,-80.0083],"E4E":[45.7235,-65.5104],"J3Y":[45.5043,-73.4217],"V3C":[49.2622,-122.7805],"S0E":[52.8501,-104.0488],"P3N":[46.6104,-81.0073],"L9V":[44.0785,-80.2034],"V1L":[49.4949,-117.29],"T5M":[53.5462,-113.4912],"N1M":[43.7059,-80.3779],"N5Z":[42.9849,-81.2453],"J7M":[45.6951,-73.635],"R3A":[49.8955,-97.1385],"N5H":[42.7732,-80.9837],"T1H":[49.6946,-112.8331],"V1R":[49.0945,-117.7098],"P5E":[46.2653,-81.7699],"A1V":[48.9592,-54.6188],"B0K":[45.5648,-62.5472],"E1B":[46.0741,-64.8022],"B0E":[45.974,-61.1272],"R0K":[49.6082,-100.0315],"L4W":[43.5896,-79.6444],"L5S":[43.5896,-79.6444],"T9H":[56.7292,-111.3885],"N4K":[44.5678,-80.943],"J5K":[45.7399,-74.1378],"N4G":[42.8595,-80.7265],"G0L":[47.7609,-69.4796],"R2X":[49.8955,-97.1385],"L4M":[44.3893,-79.6901],"V2J":[52.9794,-122.4936],"T4N":[52.2691,-113.8141],"C0A":[46.0499,-62.5181],"L0L":[44.5721,-79.7605],"T9K":[56.7292,-111.3885],"P1L":[45.0415,-79.311],"T7S":[54.1425,-115.6847],"L8K":[43.2557,-79.8711],"V0J":[54.3983,-126.6477],"A1Y":[47.7331,-53.2366],"A2A":[48.9442,-55.6526],"L7G":[43.6554,-79.919],"T9N":[54.2679,-110.7415],"C0B":[46.4332,-63.868],"R5G":[49.5254,-96.6854],"P0M":[45.9712,-81.5131],"V1E":[50.7005,-119.279],"A0B":[49.8764,-98.0979],"J8P":[45.4278,-75.711],"T1A":[50.043,-110.679],"G0X":[46.7392,-72.5626],"J0Y":[49.7576,-77.63],"N7W":[42.9893,-82.4053],"V4S":[49.1329,-122.3028],"K7R":[44.2474,-76.9506],"L7P":[43.3249,-79.7967],"N0H":[44.682,-81.178],"T0H":[58.191,-116.3957],"B6L":[45.3886,-63.1989],"E4B":[46.0777,-66.0785],"B5A":[44.0597,-64.681],"M5V":[43.6426,-79.3871],"M5S":[43.6629,-79.3957],"M4W":[43.6796,-79.3768],"L7L":[43.3249,-79.7967],"L9E":[43.512,-79.885],"L8E":[43.2285,-79.753],"N3W":[43.398,-80.312],"K1A":[45.4215,-75.6919],"K2P":[45.4178,-75.6903],"L5N":[43.582,-79.779],"M1B":[43.8074,-79.2124],"L3R":[43.8476,-79.337],"K8N":[44.3636,-77.3797],"N2L":[43.4723,-80.5449],"N6A":[42.9849,-81.2453],"P3A":[46.4897,-80.993],"K7K":[44.2312,-76.486],"L6P":[43.7282,-79.765],"L4T":[43.7096,-79.637],"M3J":[43.7682,-79.4879],"L1S":[43.8524,-78.8481],"J3G":[45.5646,-73.201],"H2X":[45.5088,-73.5878],"H3A":[45.5048,-73.5747],"G1J":[46.822,-71.215],"G3A":[46.86,-71.32],"J4Y":[45.6062,-73.438],"H9H":[45.4574,-73.825],"J1J":[45.3831,-71.8985],"J7J":[45.547,-74.033],"H7W":[45.5534,-73.711],"V6B":[49.2798,-123.1193],"V5K":[49.2827,-123.0385],"V3N":[49.2053,-122.9072],"V8V":[48.4284,-123.3656],"V1Y":[49.8872,-119.496],"V2C":[50.6745,-120.3273],"T2P":[51.0447,-114.0719],"T5H":[53.5461,-113.4938],"T8N":[53.7609,-113.323],"T4A":[51.3484,-114.0135],"T1Y":[51.0501,-113.985],"R3C":[49.8951,-97.1384],"R2C":[49.9205,-96.994],"R3T":[49.8059,-97.1461],"S4P":[50.4501,-104.6178],"B3H":[44.6475,-63.5944],"E1C":[46.0878,-64.7782],"C1C":[46.27,-63.16],"A1C":[47.5615,-52.7126],"Y0B":[60.7212,-135.0568],"Y1A":[60.7212,-135.0568],"X0A":[63.7467,-68.517],"X1A":[62.454,-114.3718]};
+
   let allSC = [];
 
   async function loadServiceCenters() {
@@ -2125,37 +2157,60 @@
     } catch(e) { console.error('SC load failed', e); }
   }
 
+  function getCanadianCoords(postal) {
+    // Normalize: remove spaces, uppercase
+    const clean = postal.replace(/\s/g,'').toUpperCase();
+    // Try full FSA (first 3 chars)
+    const fsa = clean.substring(0, 3);
+    if (FSA_COORDS[fsa]) return FSA_COORDS[fsa];
+    // Try first 2 chars as prefix fallback
+    for (const key of Object.keys(FSA_COORDS)) {
+      if (key.startsWith(fsa.substring(0,2))) return FSA_COORDS[key];
+    }
+    return null;
+  }
+
   async function searchSC() {
-    const zip = document.getElementById('sc-zip').value.trim();
-    if (!zip) { alert('Enter a ZIP or postal code first.'); return; }
+    const raw = document.getElementById('sc-zip').value.trim();
+    if (!raw) { alert('Enter a ZIP or postal code first.'); return; }
 
     const status = document.getElementById('sc-status');
     status.style.display = 'block';
     status.textContent = '⏳ Looking up location...';
 
-    try {
-      const isCA = /^[A-Za-z]\d[A-Za-z]/.test(zip);
-      const country = isCA ? 'Canada' : 'USA';
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(zip)}&country=${country}&format=json&limit=1`,
-        { headers: { 'User-Agent': 'CPE-Wiki/1.0' } }
-      );
-      const data = await res.json();
-      if (!data.length) {
-        status.textContent = '❌ Location not found. Try without spaces (e.g. L7L0G8 or 90210).';
+    const isCA = /^[A-Za-z]\d[A-Za-z]/i.test(raw);
+
+    if (isCA) {
+      // Use embedded FSA database -- no network call needed
+      const coords = getCanadianCoords(raw);
+      if (!coords) {
+        status.textContent = '❌ Canadian postal code not found. Enter the first 3 characters (e.g. L7L) or the full postal code.';
         return;
       }
-      const lat = parseFloat(data[0].lat);
-      const lng = parseFloat(data[0].lon);
-      const label = data[0].display_name.split(',').slice(0, 2).join(',').trim();
-
-      // Zoom the embedded Google My Maps to this location
+      const [lat, lng] = coords;
       const frame = document.getElementById('sc-map-frame');
       frame.src = `https://www.google.com/maps/d/embed?mid=1UKhL_cwua2BbfnMxwRk_GRb6hsY&ehbc=2E312F&ll=${lat},${lng}&z=11`;
-
-      status.innerHTML = `✅ Showing service centers near <strong>${zip}</strong> (${label}) — click any yellow pin for details`;
-    } catch(e) {
-      status.textContent = '❌ Search failed. Check your connection and try again.';
+      status.innerHTML = `✅ Showing service centers near <strong>${raw.toUpperCase()}</strong> — click any pin for details`;
+    } else {
+      // US ZIP — use Nominatim
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(raw)}&country=USA&format=json&limit=1`,
+          { headers: { 'User-Agent': 'CPE-Wiki/1.0' } }
+        );
+        const data = await res.json();
+        if (!data.length) {
+          status.textContent = '❌ ZIP code not found. Try again.';
+          return;
+        }
+        const lat = parseFloat(data[0].lat);
+        const lng = parseFloat(data[0].lon);
+        const frame = document.getElementById('sc-map-frame');
+        frame.src = `https://www.google.com/maps/d/embed?mid=1UKhL_cwua2BbfnMxwRk_GRb6hsY&ehbc=2E312F&ll=${lat},${lng}&z=11`;
+        status.innerHTML = `✅ Showing service centers near <strong>${raw}</strong> — click any pin for details`;
+      } catch(e) {
+        status.textContent = '❌ Search failed. Check your connection.';
+      }
     }
   }
 
@@ -2169,7 +2224,6 @@
   function renderSC(list) {}
   function renderDirectory(list) {}
   function filterDirectory() {}
-  function focusMarker() {}
   function renderResultsList() {}
   function initMap() {}
   function clearSearch() {}
@@ -2195,7 +2249,7 @@
         <div class="art-cat">${s.province_state || '—'}</div>
         <div class="art-cat">${s.phone || '—'}</div>
         <div style="display:flex;gap:5px;justify-content:flex-end;">
-          ${isMgr ? `<button onclick="editSC('${s.id}')" style="background:rgba(255,209,0,0.1);border:1px solid rgba(255,209,0,0.2);color:var(--yellow);padding:3px 8px;border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;">Edit</button>
+          ${isMgr ? `<button onclick="editSC('${s.id}')" style="background:rgba(12,68,124,0.1);border:1px solid rgba(12,68,124,0.2);color:var(--yellow);padding:3px 8px;border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;">Edit</button>
           <button onclick="deleteSC('${s.id}','${s.name.replace(/'/g,"&#39;")}')" style="background:rgba(217,53,53,0.1);border:1px solid rgba(217,53,53,0.2);color:var(--red);padding:3px 8px;border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;">Del</button>` : ''}
         </div>
       </div>`).join('');
@@ -2300,15 +2354,15 @@
         </div>
         <div class="acc-bd open">
           ${arts.map(a => `
-            <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;transition:border-color .15s;" onmouseover="this.style.borderColor='rgba(255,209,0,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="background:rgba(74,78,84,0.023);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;transition:border-color .15s;" onmouseover="this.style.borderColor='rgba(12,68,124,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
                 <div style="flex:1;">
                   <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;">${a.title}</div>
                   <div style="font-size:12.5px;color:var(--gray-400);line-height:1.6;">${a.body}</div>
-                  ${a.tags && a.tags.length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;">${a.tags.map(t => `<span style="background:rgba(255,209,0,0.07);border:1px solid rgba(255,209,0,0.15);color:var(--yellow-dim);font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;text-transform:uppercase;">${t}</span>`).join('')}</div>` : ''}
+                  ${a.tags && a.tags.length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;">${a.tags.map(t => `<span style="background:rgba(12,68,124,0.07);border:1px solid rgba(12,68,124,0.15);color:var(--yellow-dim);font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;text-transform:uppercase;">${t}</span>`).join('')}</div>` : ''}
                 </div>
                 ${isMgr ? `<div style="display:flex;gap:6px;flex-shrink:0;">
-                  <button onclick="editKB('${a.id}')" style="background:rgba(255,209,0,0.1);border:1px solid rgba(255,209,0,0.2);color:var(--yellow);padding:5px 12px;border-radius:5px;cursor:pointer;font-size:11px;font-weight:700;">Edit</button>
+                  <button onclick="editKB('${a.id}')" style="background:rgba(12,68,124,0.1);border:1px solid rgba(12,68,124,0.2);color:var(--yellow);padding:5px 12px;border-radius:5px;cursor:pointer;font-size:11px;font-weight:700;">Edit</button>
                   <button onclick="deleteKB('${a.id}','${a.title.replace(/'/g,"&#39;")}')" style="background:rgba(217,53,53,0.1);border:1px solid rgba(217,53,53,0.2);color:var(--red);padding:5px 12px;border-radius:5px;cursor:pointer;font-size:11px;font-weight:700;">Del</button>
                 </div>` : ''}
               </div>
