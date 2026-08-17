@@ -478,7 +478,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1), border-color 0.25s, background 0.25s, box-shadow 0.25s;
+    transition: transform 0.22s cubic-bezier(0.34,1.45,0.5,1), border-color 0.2s ease, box-shadow 0.22s ease;
     position: relative;
     overflow: hidden;
     min-height: 180px;
@@ -503,43 +503,27 @@
   }
 
   /* Corner glow orb like the mock site */
-  .card::after {
-    content: '';
-    position: absolute;
-    bottom: -50px; right: -50px;
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    background: transparent;
-    transition: all 0.35s ease;
-    pointer-events: none;
-  }
 
-  /* Shimmer sweep */
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 55%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(12,68,124,0.05), transparent);
-    transition: left 0.55s ease;
-    pointer-events: none;
-  }
 
   .card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(12,68,124,0.42);
+    transform: translateY(-8px) scale(1.03);
+    border-color: #0C447C;
     background: #FFFFFF;
-    box-shadow: 0 12px 28px rgba(74,78,84,0.10);
+    box-shadow: 0 18px 38px rgba(20,36,51,0.18), 0 0 0 2px rgba(12,68,124,0.14);
+    z-index: 2;
   }
 
-  .card:hover::after {
-    width: 200px; height: 200px;
-    background: rgba(12,68,124,0.05);
-    bottom: -60px; right: -60px;
+  .card:active {
+    transform: translateY(-3px) scale(1.005);
+    box-shadow: 0 8px 18px rgba(20,36,51,0.14), 0 0 0 2px rgba(12,68,124,0.18);
+    transition-duration: 0.09s;
   }
 
-  .card:hover::before { left: 150%; }
+  .card:focus-visible {
+    outline: none;
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 18px 38px rgba(20,36,51,0.18), 0 0 0 3px rgba(12,68,124,0.45);
+  }
 
   /* Large rounded icon box like the mock */
   .card-ico {
@@ -558,7 +542,8 @@
   .card:hover .card-ico {
     background: #3B6D11;
     border-color: #3B6D11;
-    transform: scale(1.06);
+    transform: scale(1.12) translateY(-2px);
+    box-shadow: 0 6px 14px rgba(59,109,17,0.32);
   }
 
   .card-title {
@@ -960,6 +945,12 @@
   .ph h1 em, .stat-n { color: #0C447C !important; }
   body, .ph p, .card-desc, .notice, .flist li, .art-cat { color: #38434E !important; }
   .logo-wordmark strong { color: #042C53 !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .card-ico { transition: box-shadow 0.15s ease, border-color 0.15s ease; }
+    .card:hover, .card:focus-visible, .card:active { transform: none; }
+    .card:hover .card-ico { transform: none; }
+  }
 </style>
 </head>
 <body>
